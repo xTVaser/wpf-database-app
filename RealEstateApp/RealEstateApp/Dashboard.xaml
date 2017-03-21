@@ -1,0 +1,91 @@
+﻿<Window x:Class="RealEstateApp.Dashboard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RealEstateApp"
+        mc:Ignorable="d"
+        Title="Dashboard" Height="400" Width="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <Label
+            Grid.Row="0"
+            Content="Logged in As: ">
+        </Label>
+        
+        <TabControl Grid.Row="1">
+            <TabItem Header="Listings">
+                <ListView>
+                    <ListViewItem>
+                        <Button
+                            Content="Individual Listing Page">
+                        </Button>
+                    </ListViewItem>
+                </ListView>
+            </TabItem>
+            <TabItem Header="Offices">
+                <ListView>
+                    <ListViewItem>
+                        <Button
+                            Content="Office Info Page">
+                        </Button>
+                    </ListViewItem>
+                </ListView>
+            </TabItem>
+            <TabItem Header="Clients">
+                <ListView>
+                    <ListViewItem>
+                        <Button
+                            Content="Client Info Page">
+                        </Button>
+                    </ListViewItem>
+                </ListView>
+            </TabItem>
+            <TabItem Header="Balance"> <!-- Only for agents or brokers -->
+                <ListView>
+                    <ListViewItem>
+                        <Label Content="Information"/>
+                    </ListViewItem>
+                </ListView>
+            </TabItem>
+            <TabItem Header="Employees"> <!-- Only for brokers -->
+                <ListView>
+                    <ListViewItem>
+                        <Label Content="Employee Fire Edit"/>
+                    </ListViewItem>
+                </ListView>
+            </TabItem>
+        </TabControl>
+
+        <!-- just toggle them on or off depending on the employee type -->
+        <StackPanel
+            Grid.Row="2" 
+            Orientation="Horizontal"
+            HorizontalAlignment="Right">
+            <Button
+                Content="New Listing"
+                HorizontalAlignment="Right"
+                MinWidth="150"
+                Margin="5" Visibility="Collapsed">
+            </Button>
+            <Button
+                Content="New Client"
+                HorizontalAlignment="Right"
+                MinWidth="150"
+                Margin="5" Visibility="Visible">
+            </Button>
+            <Button
+                Grid.Row="2"
+                Content="New Employee"
+                HorizontalAlignment="Right"
+                MinWidth="150"
+                Margin="5">
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

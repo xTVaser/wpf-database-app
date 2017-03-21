@@ -1,12 +1,84 @@
-﻿<Window x:Class="RealEstateApp.MainWindow"
+﻿<Window x:Name="HomePage" x:Class="RealEstateApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RealEstateApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
+        Title="Home Page" Height="350" Width="505" Margin="0" Background="#FFF1F1F1">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label 
+            Content="Real Estate Manager" 
+            Cursor="None" 
+            FontSize="24" 
+            FontWeight="Bold" 
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Grid.ColumnSpan="2"></Label>
+
+        <StackPanel
+            MinWidth="150"
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+
+            <Label Content="Office ID"/>
+            <ComboBox>
+                <!-- combo items here -->
+            </ComboBox>
+        </StackPanel>
+
+        <StackPanel
+            MinWidth="150"
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+
+            <Label Content="Username"/>
+            <TextBox/>
+        </StackPanel>
+
+        <StackPanel
+            MinWidth="150"
+            Grid.Row="3"
+            Grid.ColumnSpan="2"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+
+            <Label Content="Password"/>
+            <PasswordBox/>
+        </StackPanel>
+
+        <Button
+            Content="Login"
+            Grid.Row="4"
+            HorizontalAlignment="Right"
+            Margin="10"
+            MinWidth="100" Click="Login">
+        </Button>
+
+        <Button
+            Content="Forgot Password"
+            Grid.Row="4"
+            Grid.Column="2"
+            HorizontalAlignment="Left"
+            Margin="10"
+            MinWidth="100" Click="ForgotPassword">
+        </Button>
     </Grid>
 </Window>

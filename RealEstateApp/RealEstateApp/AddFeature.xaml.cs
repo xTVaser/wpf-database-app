@@ -10,29 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace RealEstateApp {
-
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for AddFeature.xaml
     /// </summary>
-    public partial class MainWindow : Window {
-        public MainWindow() {
+    public partial class AddFeature : Window {
+        public AddFeature() {
             InitializeComponent();
         }
 
-        private void Login(object sender, RoutedEventArgs e) {
+        private void SubmitFeature(object sender, RoutedEventArgs e) {
 
-            Dashboard newWindow = new Dashboard();
-            newWindow.Show();
-        }
-
-        private void ForgotPassword(object sender, RoutedEventArgs e) {
-
-            ForgotPassword newWindow = new ForgotPassword();
-            newWindow.Show();
         }
     }
 }
