@@ -7,7 +7,7 @@ namespace RealEstateApp.EntityModels
     using System.Data.Entity.Spatial;
 
     [Table("employee")]
-    public partial class employee
+    public partial class Employee
     {
         [Key]
         [Column(Order = 0)]
@@ -49,10 +49,10 @@ namespace RealEstateApp.EntityModels
 
         public bool first_login { get; set; }
 
-        public virtual administrator administrator { get; set; }
+        public virtual Administrator administrator { get; set; }
 
-        public virtual agent agent { get; set; }
+        public virtual Agent agent { get; set; }
 
-        public virtual office office { get; set; }
+        public virtual Office office { get; set; }
     }
 }

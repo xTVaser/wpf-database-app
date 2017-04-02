@@ -12,13 +12,21 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+using RealEstateApp.EntityModels;
+
 namespace RealEstateApp {
+
     /// <summary>
     /// Interaction logic for Dashboard.xaml
     /// </summary>
     public partial class Dashboard : Window {
-        public Dashboard() {
+
+        private Employee user;
+
+        public Dashboard(Employee user) {
+
             InitializeComponent();
+            this.user = user;
         }
     }
 }

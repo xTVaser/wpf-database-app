@@ -121,17 +121,17 @@
     <Compile Include="Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EntityModels\administrator.cs" />
-    <Compile Include="EntityModels\agent.cs" />
-    <Compile Include="EntityModels\client.cs" />
-    <Compile Include="EntityModels\commission.cs" />
-    <Compile Include="EntityModels\employee.cs" />
-    <Compile Include="EntityModels\feature.cs" />
-    <Compile Include="EntityModels\listing.cs" />
+    <Compile Include="EntityModels\Administrator.cs" />
+    <Compile Include="EntityModels\Agent.cs" />
+    <Compile Include="EntityModels\Client.cs" />
+    <Compile Include="EntityModels\Commission.cs" />
+    <Compile Include="EntityModels\Employee.cs" />
+    <Compile Include="EntityModels\Feature.cs" />
+    <Compile Include="EntityModels\Listing.cs" />
     <Compile Include="EntityModels\Model.cs" />
-    <Compile Include="EntityModels\offer.cs" />
-    <Compile Include="EntityModels\office.cs" />
-    <Compile Include="EntityModels\street_address.cs" />
+    <Compile Include="EntityModels\Offer.cs" />
+    <Compile Include="EntityModels\Office.cs" />
+    <Compile Include="EntityModels\StreetAddress.cs" />
     <Compile Include="ForgotPassword.xaml.cs">
       <DependentUpon>ForgotPassword.xaml</DependentUpon>
     </Compile>

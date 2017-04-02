@@ -7,12 +7,12 @@ namespace RealEstateApp.EntityModels
     using System.Data.Entity.Spatial;
 
     [Table("office")]
-    public partial class office
+    public partial class Office
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public office()
+        public Office()
         {
-            employees = new HashSet<employee>();
+            employees = new HashSet<Employee>();
         }
 
         public int id { get; set; }
@@ -36,8 +36,8 @@ namespace RealEstateApp.EntityModels
         public string email { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<employee> employees { get; set; }
+        public virtual ICollection<Employee> employees { get; set; }
 
-        public virtual street_address street_address { get; set; }
+        public virtual StreetAddress street_address { get; set; }
     }
 }

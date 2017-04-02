@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RealEstateApp"
         mc:Ignorable="d"
-        Title="Home Page" Height="350" Width="505" Margin="0" Background="#FFF1F1F1">
+        Title="Home Page" Height="350" Width="505" Margin="0" Background="#FFF1F1F1" Loaded="HomePage_Loaded">
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -37,9 +37,9 @@
             VerticalAlignment="Center">
 
             <Label Content="Office ID"/>
-            <ComboBox>
-                <!-- combo items here -->
-            </ComboBox>
+            
+            <!-- Office IDs Go Here -->
+            <ComboBox Name="officeList"/>
         </StackPanel>
 
         <StackPanel
@@ -50,7 +50,7 @@
             VerticalAlignment="Center">
 
             <Label Content="Username"/>
-            <TextBox/>
+            <TextBox Name="usernameField"/>
         </StackPanel>
 
         <StackPanel
@@ -61,24 +61,16 @@
             VerticalAlignment="Center">
 
             <Label Content="Password"/>
-            <PasswordBox/>
+            <PasswordBox Name="passwordField"/>
         </StackPanel>
 
         <Button
             Content="Login"
             Grid.Row="4"
-            HorizontalAlignment="Right"
+            Grid.ColumnSpan="2"
+            HorizontalAlignment="Center"
             Margin="10"
             MinWidth="100" Click="Login">
-        </Button>
-
-        <Button
-            Content="Forgot Password"
-            Grid.Row="4"
-            Grid.Column="2"
-            HorizontalAlignment="Left"
-            Margin="10"
-            MinWidth="100" Click="ForgotPassword">
         </Button>
     </Grid>
 </Window>

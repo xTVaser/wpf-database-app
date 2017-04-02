@@ -7,7 +7,7 @@ namespace RealEstateApp.EntityModels
     using System.Data.Entity.Spatial;
 
     [Table("commission")]
-    public partial class commission
+    public partial class Commission
     {
         public int id { get; set; }
 
