@@ -28,6 +28,10 @@ namespace RealEstateApp.EntityModels
         public string street_type { get; set; }
 
         [Required]
+        [StringLength(255)]
+        public string city { get; set; }
+
+        [Required]
         [StringLength(2)]
         public string province_short { get; set; }
 

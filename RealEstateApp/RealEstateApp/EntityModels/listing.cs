@@ -22,6 +22,9 @@ namespace RealEstateApp.EntityModels
 
         public int seller_id { get; set; }
 
+        [Column(TypeName = "money")]
+        public decimal asking_price { get; set; }
+
         public byte num_bedrooms { get; set; }
 
         public byte num_bathrooms { get; set; }

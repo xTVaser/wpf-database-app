@@ -1,15 +1,12 @@
-namespace RealEstateApp.EntityModels
-{
+namespace RealEstateApp.EntityModels {
     using System;
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    public partial class Model : DbContext
-    {
+    public partial class Model : DbContext {
         public Model()
-            : base("name=Database")
-        {
+            : base("name=Model") {
         }
 
         public virtual DbSet<Administrator> administrators { get; set; }
@@ -23,8 +20,7 @@ namespace RealEstateApp.EntityModels
         public virtual DbSet<Office> offices { get; set; }
         public virtual DbSet<StreetAddress> street_address { get; set; }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
+        protected override void OnModelCreating(DbModelBuilder modelBuilder) {
             modelBuilder.Entity<Administrator>()
                 .Property(e => e.salary)
                 .HasPrecision(19, 4);
@@ -88,6 +84,10 @@ namespace RealEstateApp.EntityModels
             modelBuilder.Entity<Feature>()
                 .Property(e => e.body)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<Listing>()
+                .Property(e => e.asking_price)
+                .HasPrecision(19, 4);
 
             modelBuilder.Entity<Listing>()
                 .HasMany(e => e.features)

@@ -23,6 +23,8 @@ namespace RealEstateApp {
     /// </summary>
     public partial class MainWindow : Window {
 
+        private Dictionary<int, string> brokers = new Dictionary<int, string>();
+
         public MainWindow() {
             InitializeComponent();
         }
@@ -37,12 +39,14 @@ namespace RealEstateApp {
             using (var context = new Model()) {
                 
                 // Query the DB
-                var queryResults = context.Database.SqlQuery<int>("SELECT id from office").ToList<int>();
+                var queryResults = context.Database.SqlQuery<Office>("SELECT * from office").ToList<Office>();
 
                 // Take all of the IDs and convert them to strings
                 List<string> idList = new List<string>();
-                foreach (int i in queryResults)
-                    idList.Add(i.ToString());
+                foreach (Office i in queryResults) {
+                    idList.Add(i.id.ToString());
+                    brokers.Add(i.id, i.broker_username);
+                }
 
                 if (idList.Count == 0)
                     idList.Add("No Offices Found");
@@ -105,6 +109,7 @@ namespace RealEstateApp {
             }
 
             // Clear fields
+            ClearFields();
 
             // If we have a signed in user, then open the next window
             if (authedUser != null) {
@@ -116,10 +121,18 @@ namespace RealEstateApp {
                     newWindow.Show();
                 }
                 else {
-                    Dashboard newWindow = new Dashboard(authedUser);
+                    Dashboard newWindow = new Dashboard(authedUser, authedUser.username == brokers[authedUser.office_id]);
                     newWindow.Show();
+                    this.Close();
                 }
             }
+        }
+
+        private void ClearFields() {
+
+            officeList.SelectedIndex = 0;
+            usernameField.Clear();
+            passwordField.Clear();
         }
     }
 }

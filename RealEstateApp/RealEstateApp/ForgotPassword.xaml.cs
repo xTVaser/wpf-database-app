@@ -75,7 +75,7 @@ namespace RealEstateApp {
             if (outputMessage.Equals("") is false) {
                 MessageBox.Show(outputMessage, "Error");
 
-                // Clear Fields
+                ClearFields();
                 return;
             }
 
@@ -92,6 +92,13 @@ namespace RealEstateApp {
                 MessageBox.Show("Password changed successfully, relogin with your new credentials", "Success");
             }
             this.Close();
+        }
+
+        private void ClearFields() {
+
+            newPassword.Clear();
+            verifyPassword.Clear();
+            securityAnswer.Clear();
         }
     }
 }

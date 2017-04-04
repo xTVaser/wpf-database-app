@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RealEstateApp"
         mc:Ignorable="d"
-        Title="Dashboard" Height="400" Width="400">
+        Title="Dashboard" Height="400" Width="400" Loaded="Window_Loaded">
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
@@ -15,20 +16,27 @@
 
         <Label
             Grid.Row="0"
-            Content="Logged in As: ">
+            Name="statusLabel"
+            Content="">
         </Label>
-        
+
         <TabControl Grid.Row="1">
-            <TabItem Header="Listings">
-                <ListView>
-                    <ListViewItem>
-                        <Button
-                            Content="Individual Listing Page">
-                        </Button>
-                    </ListViewItem>
+            <TabItem Header="Listings" Name="listingTab">
+                <ListView Name="listingGridView" MouseDoubleClick="ListView_MouseDoubleClick">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Address" DisplayMemberBinding="{Binding Path=Address}"/>
+                            <GridViewColumn Header="# Bedrooms" DisplayMemberBinding="{Binding Path=Bedrooms}"/>
+                            <GridViewColumn Header="# Bathrooms" DisplayMemberBinding="{Binding Path=Bathrooms}"/>
+                            <GridViewColumn Header="# Stories" DisplayMemberBinding="{Binding Path=Stories}"/>
+                            <GridViewColumn Header="Year Built" DisplayMemberBinding="{Binding Path=YearBuilt}"/>
+                            <GridViewColumn Header="Asking Price" DisplayMemberBinding="{Binding Path=AskingPrice}"/>
+                            <GridViewColumn Header="Date Listed" DisplayMemberBinding="{Binding Path=DateListed}"/>
+                        </GridView>
+                    </ListView.View>
                 </ListView>
             </TabItem>
-            <TabItem Header="Offices">
+            <TabItem Header="Offices" Name="officeTab">
                 <ListView>
                     <ListViewItem>
                         <Button
@@ -37,7 +45,7 @@
                     </ListViewItem>
                 </ListView>
             </TabItem>
-            <TabItem Header="Clients">
+            <TabItem Header="Clients" Name="clientTab">
                 <ListView>
                     <ListViewItem>
                         <Button
@@ -46,14 +54,14 @@
                     </ListViewItem>
                 </ListView>
             </TabItem>
-            <TabItem Header="Balance"> <!-- Only for agents or brokers -->
+            <TabItem Header="Balance" Name="balanceTab"> <!-- Only for agents or brokers -->
                 <ListView>
                     <ListViewItem>
                         <Label Content="Information"/>
                     </ListViewItem>
                 </ListView>
             </TabItem>
-            <TabItem Header="Employees"> <!-- Only for brokers -->
+            <TabItem Header="Employees" Name="employeeTab"> <!-- Only for brokers -->
                 <ListView>
                     <ListViewItem>
                         <Label Content="Employee Fire Edit"/>
@@ -67,25 +75,31 @@
             Grid.Row="2" 
             Orientation="Horizontal"
             HorizontalAlignment="Right">
-            <Button
+            <Button 
                 Content="New Listing"
+                Name="newListingBtn"
                 HorizontalAlignment="Right"
                 MinWidth="150"
-                Margin="5" Visibility="Collapsed">
-            </Button>
+                Margin="5" 
+                Click="newListingBtn_Click">
+            </Button>  <!-- Only administrators can do this-->
             <Button
                 Content="New Client"
+                Name="newClientBtn"
                 HorizontalAlignment="Right"
                 MinWidth="150"
-                Margin="5" Visibility="Visible">
-            </Button>
+                Margin="5" 
+                Click="newClientBtn_Click">
+            </Button> <!-- Only Agents can do this -->
             <Button
                 Grid.Row="2"
+                Name="newEmployeeBtn"
                 Content="New Employee"
                 HorizontalAlignment="Right"
                 MinWidth="150"
-                Margin="5">
-            </Button>
+                Margin="5"
+                >
+            </Button> <!-- Only brokers can do this -->
         </StackPanel>
     </Grid>
 </Window>
