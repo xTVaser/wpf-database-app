@@ -50,7 +50,6 @@ namespace RealEstateApp {
             // If Administrator, do not need to see balance or employee tabs.
             if (user.employee_type.Equals("S")) {
                 balanceTab.Visibility = Visibility.Collapsed;
-                employeeTab.Visibility = Visibility.Collapsed;
 
                 newClientBtn.Visibility = Visibility.Collapsed;
                 FillListingTab(listingGridView);
@@ -67,15 +66,17 @@ namespace RealEstateApp {
                 newEmployeeBtn.Visibility = Visibility.Collapsed;
             }
             else
+                Console.WriteLine("stub");
                 //FillTab(employeeTab);
 
-                
 
 
-            //FillTab(officeTab);
-            //FillTab(clientTab);
+
+                //FillTab(officeTab);
+                //FillTab(clientTab);
 
             // Set the title at the top
+            // TODO make this look better
             statusLabel.Content = "Logged in as: " + user.first_name + " " + user.last_name + " Access Level: " + accountType;
             
         }

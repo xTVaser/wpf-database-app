@@ -35,52 +35,10 @@ namespace RealEstateApp {
             string phoneNumber = phoneNumberField.Text;
             string email = emailField.Text;
 
-            // If any of the fields are empty, then stop
-            if (HelperFunctions.NullOrEmpty(firstName, lastName, clientType, phoneNumber, email)) {
+            Int32 result = HelperFunctions.AddNewClient(firstName, lastName, clientType, phoneNumber, email);
 
-                MessageBox.Show("Please fill out the remaining fields", "Empty Fields");
-                return;
-            }
-
-            using (var context = new Model()) {
-
-                SqlParameter fnameParam = new SqlParameter("fname", firstName);
-                SqlParameter lnameParam = new SqlParameter("lname", lastName);
-
-                if (clientType.Equals("Buyer"))
-                    clientType = "B";
-                else
-                    clientType = "S";
-                SqlParameter clientParam = new SqlParameter("clienttype", clientType);
-
-                // Correct phone number
-                phoneNumber = phoneNumber.Replace("-", "");
-                if (phoneNumber.Count() == 11 && HelperFunctions.StringNumeric(phoneNumber))
-                    phoneNumber = phoneNumber.Remove(0, 1);
-                else if (HelperFunctions.StringNumeric(phoneNumber) is false) {
-                    MessageBox.Show("Invalid Phone Number", "Invalid Fields");
-                    return;
-                }
-                SqlParameter phoneParam = new SqlParameter("phonenumber", phoneNumber);
-
-                // Validate emails
-                try {
-                    email = new MailAddress(email).Address;
-                }
-                catch(FormatException) {
-
-                    MessageBox.Show("Invalid Email", "Invalid Fields");
-                    return;
-                }
-
-                SqlParameter emailParam = new SqlParameter("email", email);
-                Object[] parameters = new object[] { fnameParam, lnameParam, clientParam, phoneParam, emailParam };
-                var queryResult = context.Database.ExecuteSqlCommand("INSERT INTO client (client_type, first_name, last_name, phone_number, email)" +
-                                                                     "VALUES (@clienttype, @fname, @lname, @phonenumber, @email)", parameters);
-                // Close Window after submission
+            if (result != -1)
                 Close();
-            }
-
         }
     }
 }

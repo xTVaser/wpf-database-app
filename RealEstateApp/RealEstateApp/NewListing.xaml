@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RealEstateApp"
         mc:Ignorable="d"
-        Title="New Listing" Height="700" Width="300">
+        Title="New Listing" Height="750" Width="300" ResizeMode="NoResize" Loaded="Window_Loaded">
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="3*"/>
-            <RowDefinition Height="7*"/>
+            <RowDefinition Height="9*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         
@@ -25,14 +25,19 @@
             </Grid.ColumnDefinitions>
 
             <Label Content="Select Client if Existing" Grid.Row="0" Grid.Column="0" FontWeight="Bold"/>
-            <ComboBox Grid.Row="0" Grid.Column="1">
-
+            <ComboBox 
+                Grid.Row="0" 
+                Grid.Column="1"
+                Name="existingClientList" 
+                SelectionChanged="existingClientList_SelectionChanged">
+                <ComboBoxItem Content="---"/>
             </ComboBox>
         </Grid>
 
         <Grid Visibility="Visible" Grid.Row="1" Margin="10">
             <Grid.RowDefinitions>
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -44,18 +49,22 @@
 
             <Label Content="Otherwise, Enter Client Information" Grid.Row="0" Grid.ColumnSpan="2" FontWeight="Bold"/>
 
-            <Label Content="Name" Grid.Row="1"/>
-            <Label Content="Email" Grid.Row="2"/>
-            <Label Content="Phone Number" Grid.Row="3"/>
+            <Label Content="First Name" Grid.Row="1"/>
+            <Label Content="Last Name" Grid.Row="2"/>
+            <Label Content="Email" Grid.Row="3"/>
+            <Label Content="Phone Number" Grid.Row="4"/>
 
-            <TextBox Grid.Row="1" Grid.Column="2"/>
-            <TextBox Grid.Row="2" Grid.Column="2"/>
-            <TextBox Grid.Row="3" Grid.Column="2"/>
+            <TextBox Grid.Row="1" Grid.Column="2" Name="clientFirstName"/>
+            <TextBox Grid.Row="2" Grid.Column="2" Name="clientLastName"/>
+            <TextBox Grid.Row="3" Grid.Column="2" Name="clientEmail"/>
+            <TextBox Grid.Row="4" Grid.Column="2" Name="clientPhoneNumber"/>
         </Grid>
 
         <Grid Visibility="Visible" Grid.Row="2" Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*"/>
+                <RowDefinition/>
+                <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -80,40 +89,62 @@
             <Label Content="Street Number" Grid.Row="1"/>
             <Label Content="Street Name" Grid.Row="2"/>
             <Label Content="Street Type" Grid.Row="3"/>
-            <Label Content="Province" Grid.Row="4"/>
-            <Label Content="Postal Code" Grid.Row="5"/>
-            <Label Content="Number Bedrooms" Grid.Row="6"/>
-            <Label Content="Number Bathrooms" Grid.Row="7"/>
-            <Label Content="Number Stories" Grid.Row="8"/>
-            <Label Content="Has Garage" Grid.Row="9"/>
-            <Label Content="Year Built" Grid.Row="10"/>
-            <Label Content="Square Footage" Grid.Row="11"/>
-            <Label Content="Lot Size (sq. Ft)" Grid.Row="12"/>
-            <Label Content="Display Picture" Grid.Row="13"/>
+            <Label Content="City" Grid.Row="4"/>
+            <Label Content="Province" Grid.Row="5"/>
+            <Label Content="Postal Code" Grid.Row="6"/>
+            <Label Content="Number Bedrooms" Grid.Row="7"/>
+            <Label Content="Number Bathrooms" Grid.Row="8"/>
+            <Label Content="Number Stories" Grid.Row="9"/>
+            <Label Content="Has Garage" Grid.Row="10"/>
+            <Label Content="Year Built" Grid.Row="11"/>
+            <Label Content="Square Footage" Grid.Row="12"/>
+            <Label Content="Lot Size (sq. Ft)" Grid.Row="13"/>
+            <Label Content="Display Picture" Grid.Row="14"/>
+            <Label Content="Asking Price" Grid.Row="15"/>
 
-            <TextBox Grid.Row="1" Grid.Column="2"/>
-            <TextBox Grid.Row="2" Grid.Column="2"/>
-            <ComboBox Grid.Row="3" Grid.Column="2">
-
+            <TextBox Grid.Row="1" Grid.Column="2" Name="streetNumberField"/>
+            <TextBox Grid.Row="2" Grid.Column="2" Name="streetNameField"/>
+            <ComboBox Grid.Row="3" Grid.Column="2" Name="streetTypeBox">
+                <ComboBoxItem Content="Rd."/>
+                <ComboBoxItem Content="Ave."/>
+                <ComboBoxItem Content="Drv."/>
+                <ComboBoxItem Content="Cres."/>
+                <ComboBoxItem Content="Blvd."/>
             </ComboBox>
-            <ComboBox Grid.Row="4" Grid.Column="2">
-                
+            <TextBox Grid.Row="4" Grid.Column="2" Name="cityField"/>
+            <ComboBox Grid.Row="5" Grid.Column="2" Name="provinceBox">
+                <ComboBoxItem Content="AB"/>
+                <ComboBoxItem Content="BC"/>
+                <ComboBoxItem Content="MB"/>
+                <ComboBoxItem Content="NB"/>
+                <ComboBoxItem Content="NL"/>
+                <ComboBoxItem Content="NT"/>
+                <ComboBoxItem Content="NS"/>
+                <ComboBoxItem Content="NU"/>
+                <ComboBoxItem Content="ON"/>
+                <ComboBoxItem Content="PE"/>
+                <ComboBoxItem Content="QC"/>
+                <ComboBoxItem Content="SK"/>
+                <ComboBoxItem Content="YT"/>
             </ComboBox>
-            <TextBox Grid.Row="5" Grid.Column="2"/>
-            <TextBox Grid.Row="6" Grid.Column="2"/>
-            <TextBox Grid.Row="7" Grid.Column="2"/>
-            <TextBox Grid.Row="8" Grid.Column="2"/>
-            <TextBox Grid.Row="9" Grid.Column="2"/>
-            <TextBox Grid.Row="10" Grid.Column="2"/>
-            <TextBox Grid.Row="11" Grid.Column="2"/>
-            <TextBox Grid.Row="12" Grid.Column="2"/>
-            <Button Content="Browse..." Grid.Row="13" Grid.Column="2" Click="OpenFileBrowser"/>
+            <TextBox Grid.Row="6" Grid.Column="2" Name="postalCodeField"/>
+            <TextBox Grid.Row="7" Grid.Column="2" Name="numberBedroomsField"/>
+            <TextBox Grid.Row="8" Grid.Column="2" Name="numberBathroomsField"/>
+            <TextBox Grid.Row="9" Grid.Column="2" Name="numberStoriesField"/>
+            <CheckBox Grid.Row="10" Grid.Column="2" Name="hasGarageBox" 
+                      HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <DatePicker Grid.Row="11" Grid.Column="2" Name="yearBuiltField" SelectedDateChanged="yearBuiltField_SelectedDateChanged"/>
+            <TextBox Grid.Row="12" Grid.Column="2" Name="squareFootageField"/>
+            <TextBox Grid.Row="13" Grid.Column="2" Name="lotSizeField"/>
+            <Button Content="Browse..." Grid.Row="14" Grid.Column="2" Click="OpenFileBrowser"/>
+            <TextBox Grid.Row="15" Grid.Column="2" Name="askingPriceField"/>
         </Grid>
 
         <Button
             Grid.Row="3"
             Content="Submit"
-            Margin="10">
+            Margin="10" 
+            FontWeight="Bold" Click="SubmitListing">
         </Button>
     </Grid>
 </Window>

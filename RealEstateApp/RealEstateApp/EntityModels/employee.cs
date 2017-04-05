@@ -36,7 +36,7 @@ namespace RealEstateApp.EntityModels
         public string last_name { get; set; }
 
         [Required]
-        [StringLength(10)]
+        [StringLength(1)]
         public string employee_type { get; set; }
 
         [Column(TypeName = "text")]
