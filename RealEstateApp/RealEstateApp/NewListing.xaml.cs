@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 
 using RealEstateApp.EntityModels;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace RealEstateApp {
 
@@ -123,9 +124,9 @@ namespace RealEstateApp {
             }
 
             string streetName = streetNameField.Text;
-            string streetType = streetTypeBox.SelectedValue.ToString();
+            string streetType = ((ComboBoxItem)streetTypeBox.SelectedItem).Content.ToString();
             string city = cityField.Text;
-            string province = provinceBox.SelectedValue.ToString();
+            string province = ((ComboBoxItem)provinceBox.SelectedItem).Content.ToString();
             string postalcode = postalCodeField.Text.ToString();
 
             // Check fields to make sure they arent null
@@ -133,7 +134,7 @@ namespace RealEstateApp {
                 || HelperFunctions.CheckPostalCode(postalcode) is false 
                 || parseResult is false) {
 
-                MessageBox.Show("Address related fields have resulted in an error", "Incorrect Fields");  // TODO: error here when shouldnt be one
+                MessageBox.Show("Address related fields have resulted in an error", "Incorrect Fields");
                 return;
             }
 
@@ -145,7 +146,7 @@ namespace RealEstateApp {
             SqlParameter provinceParam = new SqlParameter("province", province);
             SqlParameter postalCodeParam = new SqlParameter("postalcode", postalcode);
 
-            Object[] parameters = new object[] { streetNumParam, streetNameParam, streetTypeParam, provinceParam, postalCodeParam };
+            Object[] parameters = new object[] { streetNumParam, streetNameParam, streetTypeParam, cityParam, provinceParam, postalCodeParam };
             Int32 addressID = 0;
             using (var context = new Model()) {
 
@@ -200,9 +201,9 @@ namespace RealEstateApp {
                 MessageBox.Show("Asking price was entered incorrectly", "Incorrect Fields");
                 return;
             }
-            // TODO dates are invalidated
+            // TODO dates are not validated
 
-            DateTime dateListed = new DateTime();
+            DateTime dateListed = DateTime.Today;
 
             // TODO display picture here
 
@@ -216,11 +217,13 @@ namespace RealEstateApp {
                 SqlParameter numBathParam = new SqlParameter("bath", numBathrooms);
                 SqlParameter numStoriesParam = new SqlParameter("stories", numStories);
                 SqlParameter hasGarageParam = new SqlParameter("garage", hasGarage);
-                SqlParameter yearBuiltParam = new SqlParameter("yearbuilt", yearBuilt); //optional
+                SqlParameter yearBuiltParam = new SqlParameter("yearbuilt", SqlDbType.DateTime); //optional
+                yearBuiltParam.Value = yearBuilt;
                 SqlParameter sqFootageParam = new SqlParameter("sqfootage", squareFootage); //optional
                 SqlParameter lotSizeParam = new SqlParameter("lotsize", lotSize); //optional
                 // Display picture // optional
-                SqlParameter timestamp = new SqlParameter("timestamp", dateListed.Date);
+                SqlParameter timestamp = new SqlParameter("timestamp", SqlDbType.DateTime);
+                timestamp.Value = dateListed;
 
 
                 yearBuiltParam.IsNullable = true;
@@ -235,12 +238,14 @@ namespace RealEstateApp {
                     lotSizeParam.Value = DBNull.Value;
 
                 parameters = new object[] { addressFK, sellerFK, askingPriceParam, numBedParam, numBathParam, numStoriesParam,
-                    hasGarage, yearBuiltParam, sqFootageParam, lotSizeParam, timestamp };
+                    hasGarageParam, yearBuiltParam, sqFootageParam, lotSizeParam, timestamp };
 
                 context.Database.ExecuteSqlCommand("INSERT INTO listing (address_id, seller_id, asking_price, num_bedrooms, num_bathrooms, " +
                                                    "num_stories, has_garage, year_built, square_footage, lot_size, date_listed)" +
-                                                   "VALUES (@addrFK, @sellerFK, @askingprice, @bed, @bath" +
+                                                   "VALUES (@addrFK, @sellerFK, @askingprice, @bed, @bath," +
                                                    "@stories, @garage, @yearbuilt, @sqfootage, @lotsize, @timestamp)", parameters);
+
+                Close();
             }
         }
 
