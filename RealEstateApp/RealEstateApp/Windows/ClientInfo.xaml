@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RealEstateApp"
         mc:Ignorable="d"
-        Title="Client Info" Height="375" Width="300">
+        Title="Client Info" Height="450" Width="300" Loaded="Window_Loaded">
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -13,60 +13,64 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="4*"/>
         </Grid.RowDefinitions>
 
         <StackPanel
-            MinWidth="150"
+            MinWidth="200"
             Grid.Row="0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center">
 
             <Label Content="Client Name" FontWeight="Bold"/>
-            <Label Content="John Smith"/>
+            <Label Name="clientName" Content=""/>
         </StackPanel>
-
+        
         <StackPanel
-            MinWidth="150"
+            MinWidth="200"
             Grid.Row="1"
             HorizontalAlignment="Center"
             VerticalAlignment="Center">
 
             <Label Content="Phone Number" FontWeight="Bold"/>
-            <Label Content="John Smith"/>
+            <Label Name="phoneNumber" Content=""/>
         </StackPanel>
 
         <StackPanel
-            MinWidth="150"
+            MinWidth="200"
             Grid.Row="2"
             HorizontalAlignment="Center"
             VerticalAlignment="Center">
 
             <Label Content="Email" FontWeight="Bold"/>
-            <Label Content="John Smith"/>
+            <Label Name="email" Content=""/>
         </StackPanel>
 
         <StackPanel
-            MinWidth="150"
+            MinWidth="200"
             Grid.Row="3"
             HorizontalAlignment="Center"
             VerticalAlignment="Center">
 
             <Label Content="Assigned Agent Name" FontWeight="Bold"/>
-            <Label Content="John Smith"/>
+            <Label Name="assignedAgentName" Content=""/>
         </StackPanel>
 
         <StackPanel
-            MinWidth="250"
+            MinWidth="270"
             Grid.Row="4"
             HorizontalAlignment="Left"
             VerticalAlignment="Top">
 
             <Label Content="Offers" FontWeight="Bold"/>
-            <ListView>
-                <ListViewItem>
-                    <Label Content="Sample"></Label>
-                </ListViewItem>
+            <ListView Name="offerGridView" FontSize="10">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Address" DisplayMemberBinding="{Binding Path=Address}"/>
+                        <GridViewColumn Header="Amount" DisplayMemberBinding="{Binding Path=Amount}"/>
+                        <GridViewColumn Header="Date Offered" DisplayMemberBinding="{Binding Path=DateOffered}"/>
+                    </GridView>
+                </ListView.View>
             </ListView>
         </StackPanel>
     </Grid>

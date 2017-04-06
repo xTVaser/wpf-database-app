@@ -12,13 +12,20 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+// TODO: implement
+
 namespace RealEstateApp {
     /// <summary>
     /// Interaction logic for ListingInfo.xaml
     /// </summary>
     public partial class ListingInfo : Window {
-        public ListingInfo() {
+
+        private ListingItem item;
+
+        public ListingInfo(ListingItem item) {
+
             InitializeComponent();
+            this.item = item;
         }
 
         private void AddFeature(object sender, RoutedEventArgs e) {

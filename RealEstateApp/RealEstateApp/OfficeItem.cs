@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RealEstateApp {
 
-    class OfficeItem {
+    public class OfficeItem {
 
         public int ID { get; set; }
         public string Address { get; set; }

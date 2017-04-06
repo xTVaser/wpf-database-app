@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RealEstateApp {
 
-    class ClientItem {
+    public class ClientItem {
 
         public int id { get; set; } 
         public int? agentId { get; set; }

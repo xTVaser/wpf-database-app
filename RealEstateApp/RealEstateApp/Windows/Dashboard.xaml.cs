@@ -14,6 +14,8 @@ using System.Windows.Shapes;
 
 using RealEstateApp.EntityModels;
 
+// TODO: finish interactions
+
 namespace RealEstateApp {
 
     /// <summary>
@@ -120,11 +122,22 @@ namespace RealEstateApp {
             }
         }
 
+        /// <summary>
+        /// Will open a window with additional information on the listing
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void listGridView_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
 
             var item = ((FrameworkElement)e.OriginalSource).DataContext as ListingItem;
+            ListingInfo newWindow = new ListingInfo(item);
+            newWindow.Show();
         }
 
+        /// <summary>
+        /// Populates the office tab with OfficeItems
+        /// </summary>
+        /// <param name="list">The listview that contains the items</param>
         private void FillOfficeTab(ListView list) {
 
             // Fill tab with all offices information
@@ -150,6 +163,9 @@ namespace RealEstateApp {
 
         private void officeGridView_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
 
+            var item = ((FrameworkElement)e.OriginalSource).DataContext as OfficeItem;
+            OfficeInfo newWindow = new OfficeInfo(item);
+            newWindow.Show();
         }
 
         // TODO: agents will only see their clients, right now it shows all
@@ -178,6 +194,9 @@ namespace RealEstateApp {
 
         private void clientGridView_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
 
+            var item = ((FrameworkElement)e.OriginalSource).DataContext as ClientItem;
+            ClientInfo newWindow = new ClientInfo(item);
+            newWindow.Show();
         }
     }
 }
