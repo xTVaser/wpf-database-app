@@ -3,25 +3,29 @@ namespace RealEstateApp.EntityModels {
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
+    using System.Data.Entity.ModelConfiguration.Conventions;
 
     public partial class Model : DbContext {
         public Model()
-            : base("name=Model") {
+            : base("name=EntityModel") {
         }
 
-        public virtual DbSet<Administrator> administrators { get; set; }
-        public virtual DbSet<Agent> agents { get; set; }
-        public virtual DbSet<Client> clients { get; set; }
-        public virtual DbSet<Commission> commissions { get; set; }
-        public virtual DbSet<Employee> employees { get; set; }
-        public virtual DbSet<Feature> features { get; set; }
-        public virtual DbSet<Listing> listings { get; set; }
-        public virtual DbSet<Offer> offers { get; set; }
-        public virtual DbSet<Office> offices { get; set; }
-        public virtual DbSet<StreetAddress> street_address { get; set; }
+        public virtual DbSet<Adminstrator> Adminstrators { get; set; }
+        public virtual DbSet<Agent> Agents { get; set; }
+        public virtual DbSet<Client> Clients { get; set; }
+        public virtual DbSet<Commission> Commissions { get; set; }
+        public virtual DbSet<Employee> Employees { get; set; }
+        public virtual DbSet<Feature> Features { get; set; }
+        public virtual DbSet<Listing> Listings { get; set; }
+        public virtual DbSet<Offer> Offers { get; set; }
+        public virtual DbSet<Office> Offices { get; set; }
+        public virtual DbSet<StreetAddress> StreetAddresses { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder) {
-            modelBuilder.Entity<Administrator>()
+
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
+            modelBuilder.Entity<Adminstrator>()
                 .Property(e => e.salary)
                 .HasPrecision(19, 4);
 
@@ -42,14 +46,14 @@ namespace RealEstateApp.EntityModels {
                 .IsFixedLength();
 
             modelBuilder.Entity<Client>()
-                .HasMany(e => e.listings)
-                .WithRequired(e => e.client)
+                .HasMany(e => e.Listings)
+                .WithRequired(e => e.Client)
                 .HasForeignKey(e => e.seller_id)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Client>()
-                .HasMany(e => e.offers)
-                .WithRequired(e => e.client)
+                .HasMany(e => e.Offers)
+                .WithRequired(e => e.Client)
                 .HasForeignKey(e => e.client_id)
                 .WillCascadeOnDelete(false);
 
@@ -70,12 +74,12 @@ namespace RealEstateApp.EntityModels {
                 .IsUnicode(false);
 
             modelBuilder.Entity<Employee>()
-                .HasOptional(e => e.administrator)
-                .WithRequired(e => e.employee);
+                .HasOptional(e => e.Adminstrator)
+                .WithRequired(e => e.Employee);
 
             modelBuilder.Entity<Employee>()
-                .HasOptional(e => e.agent)
-                .WithRequired(e => e.employee);
+                .HasOptional(e => e.Agent)
+                .WithRequired(e => e.Employee);
 
             modelBuilder.Entity<Feature>()
                 .Property(e => e.heading)
@@ -90,14 +94,14 @@ namespace RealEstateApp.EntityModels {
                 .HasPrecision(19, 4);
 
             modelBuilder.Entity<Listing>()
-                .HasMany(e => e.features)
-                .WithRequired(e => e.listing)
+                .HasMany(e => e.Features)
+                .WithRequired(e => e.Listing)
                 .HasForeignKey(e => e.listing_id)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Listing>()
-                .HasMany(e => e.offers)
-                .WithRequired(e => e.listing)
+                .HasMany(e => e.Offers)
+                .WithRequired(e => e.Listing)
                 .HasForeignKey(e => e.listing_id)
                 .WillCascadeOnDelete(false);
 
@@ -114,8 +118,8 @@ namespace RealEstateApp.EntityModels {
                 .IsFixedLength();
 
             modelBuilder.Entity<Office>()
-                .HasMany(e => e.employees)
-                .WithRequired(e => e.office)
+                .HasMany(e => e.Employees)
+                .WithRequired(e => e.Office)
                 .HasForeignKey(e => e.office_id)
                 .WillCascadeOnDelete(false);
 
@@ -128,14 +132,14 @@ namespace RealEstateApp.EntityModels {
                 .IsFixedLength();
 
             modelBuilder.Entity<StreetAddress>()
-                .HasMany(e => e.listings)
-                .WithRequired(e => e.street_address)
+                .HasMany(e => e.Listings)
+                .WithRequired(e => e.StreetAddress)
                 .HasForeignKey(e => e.address_id)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<StreetAddress>()
-                .HasMany(e => e.offices)
-                .WithRequired(e => e.street_address)
+                .HasMany(e => e.Offices)
+                .WithRequired(e => e.StreetAddress)
                 .HasForeignKey(e => e.address_id)
                 .WillCascadeOnDelete(false);
         }

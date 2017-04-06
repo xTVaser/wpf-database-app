@@ -5,24 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RealEstateApp"
         mc:Ignorable="d"
-        Title="Dashboard" Height="400" Width="400" Loaded="Window_Loaded">
+        Title="Dashboard" Height="450" Width="650" Loaded="Window_Loaded">
     
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="8*"/>
+            <RowDefinition Height="1.75*"/>
+            <RowDefinition Height="10*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
-        <Label
-            Grid.Row="0"
-            Name="statusLabel"
-            Content="">
-        </Label>
-
+        <StackPanel Grid.Row="0">
+            <Label
+                Name="accountStatus"
+                Content="Logged in as: "
+                FontWeight="DemiBold">
+            </Label>
+            <Label
+                Name="accessStatus"
+                Content="Access Level: "
+                FontWeight="DemiBold">
+            </Label>
+        </StackPanel>
+        
         <TabControl Grid.Row="1">
             <TabItem Header="Listings" Name="listingTab">
-                <ListView Name="listingGridView" MouseDoubleClick="ListView_MouseDoubleClick">
+                <ListView Name="listingGridView" MouseDoubleClick="listGridView_MouseDoubleClick">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Address" DisplayMemberBinding="{Binding Path=Address}"/>
@@ -37,12 +44,16 @@
                 </ListView>
             </TabItem>
             <TabItem Header="Offices" Name="officeTab">
-                <ListView>
-                    <ListViewItem>
-                        <Button
-                            Content="Office Info Page">
-                        </Button>
-                    </ListViewItem>
+                <ListView Name="officeGridView" MouseDoubleClick="officeGridView_MouseDoubleClick">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Office ID" DisplayMemberBinding="{Binding Path=ID}"/>
+                            <GridViewColumn Header="Address" DisplayMemberBinding="{Binding Path=Address}"/>
+                            <GridViewColumn Header="Phone Number" DisplayMemberBinding="{Binding Path=PhoneNumber}"/>
+                            <GridViewColumn Header="Fax Number" DisplayMemberBinding="{Binding Path=FaxNumber}"/>
+                            <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Path=Email}"/>
+                        </GridView>
+                    </ListView.View>
                 </ListView>
             </TabItem>
             <TabItem Header="Clients" Name="clientTab">

@@ -6,7 +6,7 @@ namespace RealEstateApp.EntityModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("feature")]
+    [Table("Feature")]
     public partial class Feature
     {
         public int id { get; set; }
@@ -21,6 +21,6 @@ namespace RealEstateApp.EntityModels
         [Required]
         public string body { get; set; }
 
-        public virtual Listing listing { get; set; }
+        public virtual Listing Listing { get; set; }
     }
 }

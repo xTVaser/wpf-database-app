@@ -6,14 +6,14 @@ namespace RealEstateApp.EntityModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("client")]
+    [Table("Client")]
     public partial class Client
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Client()
         {
-            listings = new HashSet<Listing>();
-            offers = new HashSet<Offer>();
+            Listings = new HashSet<Listing>();
+            Offers = new HashSet<Offer>();
         }
 
         public int id { get; set; }
@@ -41,9 +41,9 @@ namespace RealEstateApp.EntityModels
         public string email { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Listing> listings { get; set; }
+        public virtual ICollection<Listing> Listings { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Offer> offers { get; set; }
+        public virtual ICollection<Offer> Offers { get; set; }
     }
 }

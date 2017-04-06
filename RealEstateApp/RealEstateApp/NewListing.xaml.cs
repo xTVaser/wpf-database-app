@@ -154,7 +154,7 @@ namespace RealEstateApp {
                                                    "VALUES (@num, @name, @type, @city, @province, @postalcode)", parameters);
 
                 // Get the foreign key ID
-                var result = context.street_address.SqlQuery("SELECT * FROM street_address WHERE ID = IDENT_CURRENT('street_address')").FirstOrDefault<StreetAddress>();
+                var result = context.StreetAddresses.SqlQuery("SELECT * FROM street_address WHERE ID = IDENT_CURRENT('street_address')").FirstOrDefault<StreetAddress>();
                 addressID = result.id;
             }
 

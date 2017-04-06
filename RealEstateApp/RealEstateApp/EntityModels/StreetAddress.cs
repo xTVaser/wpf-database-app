@@ -6,13 +6,14 @@ namespace RealEstateApp.EntityModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
+    [Table("StreetAddress")]
     public partial class StreetAddress
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public StreetAddress()
         {
-            listings = new HashSet<Listing>();
-            offices = new HashSet<Office>();
+            Listings = new HashSet<Listing>();
+            Offices = new HashSet<Office>();
         }
 
         public int id { get; set; }
@@ -40,9 +41,9 @@ namespace RealEstateApp.EntityModels
         public string postal_code { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Listing> listings { get; set; }
+        public virtual ICollection<Listing> Listings { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Office> offices { get; set; }
+        public virtual ICollection<Office> Offices { get; set; }
     }
 }

@@ -86,7 +86,7 @@ namespace RealEstateApp {
                 SqlParameter usernameParam = new SqlParameter("username", username);
                 SqlParameter officeIdParam = new SqlParameter("id", officeID);
                 Object[] parameters = new object[] { usernameParam, officeIdParam };
-                var queryResult = context.employees.SqlQuery("SELECT * FROM employee WHERE username = @username AND office_id = @id", parameters).FirstOrDefault<Employee>();
+                var queryResult = context.Employees.SqlQuery("SELECT * FROM employee WHERE username = @username AND office_id = @id", parameters).FirstOrDefault<Employee>();
 
                 // If no result, then there is no user with those credentials
                 if (queryResult == null)

@@ -24,6 +24,15 @@ namespace RealEstateApp {
                 + addr.postal_code;
         }
 
+        public static string PhoneNumberToString(string number) {
+
+            string firstSegment = number.Substring(0, 3);
+            string secondSegment = number.Substring(3, 3);
+            string thirdSegment = number.Substring(6, 4);
+
+            return "(" + firstSegment + ")-" + secondSegment + "-" + thirdSegment;
+        }
+
         public static Boolean NullOrEmpty(params string[] strings) {
 
             // Check if any of the strings is null or empty
@@ -100,7 +109,7 @@ namespace RealEstateApp {
                 var queryResult = context.Database.ExecuteSqlCommand("INSERT INTO client (client_type, first_name, last_name, phone_number, email)" +
                                                                        "VALUES (@clienttype, @fname, @lname, @phonenumber, @email)", parameters);
 
-                var result = context.clients.SqlQuery("SELECT * FROM client WHERE ID = IDENT_CURRENT('client')").FirstOrDefault<Client>();
+                var result = context.Clients.SqlQuery("SELECT * FROM client WHERE ID = IDENT_CURRENT('client')").FirstOrDefault<Client>();
                 
                 return result.id;
             }

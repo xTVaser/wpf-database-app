@@ -67,18 +67,31 @@ namespace RealEstateApp {
             }
             else
                 Console.WriteLine("stub");
-                //FillTab(employeeTab);
-
-
-
-
-                //FillTab(officeTab);
-                //FillTab(clientTab);
-
-            // Set the title at the top
-            // TODO make this look better
-            statusLabel.Content = "Logged in as: " + user.first_name + " " + user.last_name + " Access Level: " + accountType;
+            //FillTab(employeeTab);
             
+            // Everyone can see these tabs and content within
+            FillOfficeTab(officeGridView);
+            //FillTab(clientTab);
+
+            // Set the status text at the top
+            accountStatus.Content += user.first_name + " " + user.last_name;
+            accessStatus.Content += accountType;
+        }
+
+        //Button Methods
+
+        private void newListingBtn_Click(object sender, RoutedEventArgs e) {
+
+            // Open new listing window
+            NewListing newListingWindow = new NewListing();
+            newListingWindow.Show();
+        }
+
+        private void newClientBtn_Click(object sender, RoutedEventArgs e) {
+
+            // Open client window
+            AddClient addClientWindow = new AddClient();
+            addClientWindow.Show();
         }
 
         /// <summary>
@@ -90,43 +103,53 @@ namespace RealEstateApp {
             // Fill tab with all listings
             using ( var context = new Model()) {
 
-                var queryResult = context.listings.SqlQuery("SELECT * FROM listing").ToList();
+                var queryResult = context.Listings.SqlQuery("SELECT * FROM Listing").ToList();
 
                 foreach (Listing l in queryResult) {
 
-                    ListingItem newItem = new ListingItem();
-                    newItem.Address = HelperFunctions.AddressToString(l.street_address);
+                    ListingItem newItem = new ListingItem(l.year_built, l.date_listed);
+                    newItem.id = l.id;
+                    newItem.Address = HelperFunctions.AddressToString(l.StreetAddress);
                     newItem.Bedrooms = l.num_bedrooms;
                     newItem.Bathrooms = l.num_bathrooms;
                     newItem.Stories = l.num_stories;
-                    newItem.YearBuilt = (DateTime) l.year_built;
-                    newItem.AskingPrice = l.asking_price;
-                    newItem.DateListed = l.date_listed;
+                    newItem.AskingPriceDecimal = l.asking_price;
 
                     list.Items.Add(newItem);
                 }
             }
         }
 
-        private void newListingBtn_Click(object sender, RoutedEventArgs e) {
-
-            // Open new listing window
-            NewListing newListingWindow = new NewListing();
-            newListingWindow.Show();
-        }
-
-        private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
+        private void listGridView_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
 
             var item = ((FrameworkElement)e.OriginalSource).DataContext as ListingItem;
         }
 
-        // Fill client page
+        private void FillOfficeTab(ListView list) {
 
-        private void newClientBtn_Click(object sender, RoutedEventArgs e) {
+            // Fill tab with all offices information
+            using (var context = new Model()) {
 
-            // Open client window
-            AddClient addClientWindow = new AddClient();
-            addClientWindow.Show();
+                var queryResult = context.Offices.SqlQuery("SELECT * FROM Office").ToList();
+
+                foreach (Office o in queryResult) {
+
+                    OfficeItem newItem = new OfficeItem();
+                    newItem.ID = o.id;
+                    newItem.Address = HelperFunctions.AddressToString(o.StreetAddress);
+                    newItem.PhoneNumber = HelperFunctions.PhoneNumberToString(o.phone_number);
+                    newItem.FaxNumber = HelperFunctions.PhoneNumberToString(o.fax_number);
+                    newItem.Email = o.email;
+
+                    list.Items.Add(newItem);
+                }
+            }
+        }
+
+        
+
+        private void officeGridView_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
+
         }
     }
 }

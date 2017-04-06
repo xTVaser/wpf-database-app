@@ -6,7 +6,7 @@ namespace RealEstateApp.EntityModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("offer")]
+    [Table("Offer")]
     public partial class Offer
     {
         public int id { get; set; }
@@ -20,8 +20,8 @@ namespace RealEstateApp.EntityModels
 
         public DateTime date_offered { get; set; }
 
-        public virtual Client client { get; set; }
+        public virtual Client Client { get; set; }
 
-        public virtual Listing listing { get; set; }
+        public virtual Listing Listing { get; set; }
     }
 }

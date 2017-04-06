@@ -6,8 +6,8 @@ namespace RealEstateApp.EntityModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("administrator")]
-    public partial class Administrator
+    [Table("Adminstrator")]
+    public partial class Adminstrator
     {
         [Key]
         [Column(Order = 0)]
@@ -22,6 +22,6 @@ namespace RealEstateApp.EntityModels
         [Column(TypeName = "money")]
         public decimal salary { get; set; }
 
-        public virtual Employee employee { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 }

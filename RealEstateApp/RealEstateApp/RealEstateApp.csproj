@@ -136,7 +136,7 @@
     <Compile Include="Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EntityModels\Administrator.cs" />
+    <Compile Include="EntityModels\Adminstrator.cs" />
     <Compile Include="EntityModels\Agent.cs" />
     <Compile Include="EntityModels\Client.cs" />
     <Compile Include="EntityModels\Commission.cs" />
@@ -182,6 +182,7 @@
     <Compile Include="OfficeInfo.xaml.cs">
       <DependentUpon>OfficeInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="OfficeItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -218,5 +219,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

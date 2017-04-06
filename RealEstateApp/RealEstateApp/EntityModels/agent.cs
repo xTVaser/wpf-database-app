@@ -6,7 +6,7 @@ namespace RealEstateApp.EntityModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("agent")]
+    [Table("Agent")]
     public partial class Agent
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -33,6 +33,6 @@ namespace RealEstateApp.EntityModels
 
         public float broker_share { get; set; }
 
-        public virtual Employee employee { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 }
