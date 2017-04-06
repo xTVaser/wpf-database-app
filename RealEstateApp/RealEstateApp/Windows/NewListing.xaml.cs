@@ -114,6 +114,10 @@ namespace RealEstateApp {
             else 
                 sellerID = clientIDs.ElementAt(existingClientList.SelectedIndex);
 
+            // TODO: check if clients dont all get changed to sellers, suspicious
+            // TODO: also, make the existing client a seller/buyer if they are currently just a buyer.
+
+
             // Next we have to make a new address
             int streetNum = -1;
             bool parseResult = int.TryParse(streetNumberField.Text, out streetNum);

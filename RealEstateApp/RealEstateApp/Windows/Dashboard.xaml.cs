@@ -71,7 +71,7 @@ namespace RealEstateApp {
             
             // Everyone can see these tabs and content within
             FillOfficeTab(officeGridView);
-            //FillTab(clientTab);
+            FillClientTab(clientGridView);
 
             // Set the status text at the top
             accountStatus.Content += user.first_name + " " + user.last_name;
@@ -141,14 +141,42 @@ namespace RealEstateApp {
                     newItem.FaxNumber = HelperFunctions.PhoneNumberToString(o.fax_number);
                     newItem.Email = o.email;
 
+                    newItem.BrokerUsername = o.broker_username;
+
                     list.Items.Add(newItem);
                 }
             }
         }
 
-        
-
         private void officeGridView_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
+
+        }
+
+        // TODO: agents will only see their clients, right now it shows all
+        private void FillClientTab(ListView list) {
+
+            // Fill tab with all offices information
+            using (var context = new Model()) {
+
+                var queryResult = context.Clients.SqlQuery("SELECT * FROM Client").ToList();
+
+                foreach (Client c in queryResult) {
+
+                    ClientItem newItem = new ClientItem(c.client_type);
+                    newItem.FirstName = c.first_name;
+                    newItem.LastName = c.last_name;
+                    newItem.PhoneNumber = HelperFunctions.PhoneNumberToString(c.phone_number);
+                    newItem.Email = c.email;
+
+                    newItem.id = c.id;
+                    newItem.agentId = c.assigned_agent;
+
+                    list.Items.Add(newItem);
+                }
+            }
+        }
+
+        private void clientGridView_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
 
         }
     }

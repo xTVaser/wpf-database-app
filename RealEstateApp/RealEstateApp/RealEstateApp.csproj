@@ -78,62 +78,63 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="AddClient.xaml">
+    <Page Include="Windows\AddClient.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AddFeature.xaml">
+    <Page Include="Windows\AddFeature.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AddOffer.xaml">
+    <Page Include="Windows\AddOffer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AgentInfo.xaml">
+    <Page Include="Windows\AgentInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ClientInfo.xaml">
+    <Page Include="Windows\ClientInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Dashboard.xaml">
+    <Page Include="Windows\Dashboard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ForgotPassword.xaml">
+    <Page Include="Windows\ForgotPassword.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ListingInfo.xaml">
+    <Page Include="Windows\ListingInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="AddClient.xaml.cs">
+    <Compile Include="Windows\AddClient.xaml.cs">
       <DependentUpon>AddClient.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AddFeature.xaml.cs">
+    <Compile Include="Windows\AddFeature.xaml.cs">
       <DependentUpon>AddFeature.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AddOffer.xaml.cs">
+    <Compile Include="Windows\AddOffer.xaml.cs">
       <DependentUpon>AddOffer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AgentInfo.xaml.cs">
+    <Compile Include="Windows\AgentInfo.xaml.cs">
       <DependentUpon>AgentInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ClientInfo.xaml.cs">
+    <Compile Include="Windows\ClientInfo.xaml.cs">
       <DependentUpon>ClientInfo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dashboard.xaml.cs">
+    <Compile Include="ClientItem.cs" />
+    <Compile Include="Windows\Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
     </Compile>
     <Compile Include="EntityModels\Adminstrator.cs" />
@@ -148,38 +149,38 @@
     <Compile Include="EntityModels\Office.cs" />
     <Compile Include="EntityModels\StreetAddress.cs" />
     <Compile Include="HelperFunctions.cs" />
-    <Compile Include="ForgotPassword.xaml.cs">
+    <Compile Include="Windows\ForgotPassword.xaml.cs">
       <DependentUpon>ForgotPassword.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ListingInfo.xaml.cs">
+    <Compile Include="Windows\ListingInfo.xaml.cs">
       <DependentUpon>ListingInfo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="NewEmployee.xaml">
+    <Page Include="Windows\NewEmployee.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="NewListing.xaml">
+    <Page Include="Windows\NewListing.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="OfficeInfo.xaml">
+    <Page Include="Windows\OfficeInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ListingItem.cs" />
-    <Compile Include="NewEmployee.xaml.cs">
+    <Compile Include="Windows\NewEmployee.xaml.cs">
       <DependentUpon>NewEmployee.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NewListing.xaml.cs">
+    <Compile Include="Windows\NewListing.xaml.cs">
       <DependentUpon>NewListing.xaml</DependentUpon>
     </Compile>
-    <Compile Include="OfficeInfo.xaml.cs">
+    <Compile Include="Windows\OfficeInfo.xaml.cs">
       <DependentUpon>OfficeInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="OfficeItem.cs" />

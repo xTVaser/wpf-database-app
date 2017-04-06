@@ -57,12 +57,16 @@
                 </ListView>
             </TabItem>
             <TabItem Header="Clients" Name="clientTab">
-                <ListView>
-                    <ListViewItem>
-                        <Button
-                            Content="Client Info Page">
-                        </Button>
-                    </ListViewItem>
+                <ListView Name="clientGridView" MouseDoubleClick="clientGridView_MouseDoubleClick" >
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="First Name" DisplayMemberBinding="{Binding Path=FirstName}"/>
+                            <GridViewColumn Header="Last Name" DisplayMemberBinding="{Binding Path=LastName}"/>
+                            <GridViewColumn Header="Phone Number" DisplayMemberBinding="{Binding Path=PhoneNumber}"/>
+                            <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Path=Email}"/>
+                            <GridViewColumn Header="Client Type" DisplayMemberBinding="{Binding Path=ClientType}"/>
+                        </GridView>
+                    </ListView.View>
                 </ListView>
             </TabItem>
             <TabItem Header="Balance" Name="balanceTab"> <!-- Only for agents or brokers -->

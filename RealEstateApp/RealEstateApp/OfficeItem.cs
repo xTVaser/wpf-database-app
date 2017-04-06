@@ -14,5 +14,7 @@ namespace RealEstateApp {
         public string FaxNumber { get; set; }
         public string Email { get; set; }
 
+        public string BrokerUsername { get; set; }
+
     }
 }
