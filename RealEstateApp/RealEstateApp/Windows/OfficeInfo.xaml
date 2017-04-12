@@ -5,61 +5,64 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RealEstateApp"
         mc:Ignorable="d"
-        Title="Office Info" Height="500" Width="300">
+        Title="Office Info" Height="500" Width="400" Loaded="Window_Loaded">
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="3*"/>
             <RowDefinition Height="2*"/>
-            <RowDefinition Height="4*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
 
         <StackPanel
             MinWidth="150"
             Grid.Row="0"
-            HorizontalAlignment="Center"
+            HorizontalAlignment="Left"
             VerticalAlignment="Center">
 
-            <Label Content="Address" FontWeight="Bold"/>
-            <Label Content="The Address"/>
+            <Label Content="Office Address" FontWeight="Bold"/>
+            <Label Name="officeAddress"/>
         </StackPanel>
 
         <StackPanel
             MinWidth="150"
             Grid.Row="1"
-            HorizontalAlignment="Center"
+            HorizontalAlignment="Left"
             VerticalAlignment="Center">
 
-            <Label Content="Contact Office" FontWeight="Bold"/>
-            <Label Content="Phone Number"/>
-            <Label Content="Fax Number"/>
-            <Label Content="Email"/>
+            <Label Content="Office Contact Info" FontWeight="Bold"/>
+            <Label Name="officePhoneNumber"/>
+            <Label Name="officeFaxNumber"/>
+            <Label Name="officeEmail"/>
         </StackPanel>
 
         <StackPanel
             MinWidth="150"
             Grid.Row="2"
-            HorizontalAlignment="Center"
+            HorizontalAlignment="Left"
             VerticalAlignment="Center">
 
-            <Label Content="Contact Broker" FontWeight="Bold"/>
-            <Label Content="Phone Number"/>
-            <Label Content="Email"/>
+            <Label Content="Broker Contact Info" FontWeight="Bold"/>
+            <Label Name="brokerName"/>
+            <Label Name="brokerEmail"/>
         </StackPanel>
 
-        <StackPanel
-            MinWidth="250"
-            Grid.Row="4"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top">
+        <Label 
+            Content="Office Employee Listing" 
+            FontWeight="Bold"
+            Grid.Row="3"/>
 
-            <Label Content="Employee Listing" FontWeight="Bold"/>
-            <ListView>
-                <ListViewItem>
-                    <Label Content="Sample"></Label>
-                </ListViewItem>
-            </ListView>
-        </StackPanel>
+        <ListView Name="employeeListView" Grid.Row="4">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="First Name" DisplayMemberBinding="{Binding Path=FirstName}"/>
+                    <GridViewColumn Header="Last Name" DisplayMemberBinding="{Binding Path=LastName}"/>
+                    <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Path=Email}"/>
+                    <GridViewColumn Header="Occupation" DisplayMemberBinding="{Binding Path=Occupation}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>

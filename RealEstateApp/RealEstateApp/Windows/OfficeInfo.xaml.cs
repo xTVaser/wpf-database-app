@@ -12,7 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-// TODO: implement
+using RealEstateApp.EntityModels;
+using System.Data.SqlClient;
 
 namespace RealEstateApp {
 
@@ -27,6 +28,44 @@ namespace RealEstateApp {
 
             InitializeComponent();
             this.item = item;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e) {
+
+            // Set address field
+            officeAddress.Content = item.Address;
+
+            // Set office contact information
+            officePhoneNumber.Content = item.PhoneNumber;
+            officeFaxNumber.Content = item.FaxNumber;
+            officeEmail.Content = item.Email;
+
+            // Set broker information and employee listing
+            using (var context = new Model()) {
+
+                // Broker information
+                SqlParameter officeIDParam = new SqlParameter("id", item.ID);
+                SqlParameter brokerNameParam = new SqlParameter("broker", item.BrokerUsername);
+                Object[] parameters = new object[] { officeIDParam, brokerNameParam };
+
+                Employee broker = context.Employees.SqlQuery("SELECT * FROM Employee WHERE username = @broker AND office_id = @id", parameters).FirstOrDefault<Employee>();
+
+                brokerName.Content = broker.first_name + " " + broker.last_name;
+                brokerEmail.Content = broker.email;
+
+                // employee listing
+                var employees = context.Employees.SqlQuery("SELECT * FROM Employee").ToList<Employee>();
+
+                foreach (Employee employee in employees) {
+
+                    EmployeeItem newItem = new EmployeeItem(employee.employee_type);
+                    newItem.FirstName = employee.first_name;
+                    newItem.LastName = employee.last_name;
+                    newItem.Email = employee.email;
+
+                    employeeListView.Items.Add(newItem);
+                }
+            }
         }
     }
 }
