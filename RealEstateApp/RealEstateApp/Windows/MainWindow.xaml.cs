@@ -68,6 +68,7 @@ namespace RealEstateApp {
             string officeIDText = officeList.SelectedValue.ToString();
             string username = usernameField.Text;
             string password = passwordField.Password;
+            Int32 agentID = -1;
 
             // Check that fields are filled out
             if (officeIDText.Equals("No Offices Found") || officeIDText == null || officeIDText.Equals("") ||
@@ -104,8 +105,13 @@ namespace RealEstateApp {
                     }
                 }
                 // Otherwise, valid login, continue
-                else
+                else {
+
                     authedUser = queryResult;
+
+                    if (authedUser.employee_type.Equals("A"))
+                        agentID = authedUser.Agent.id;
+                }
             }
 
             // Clear fields
@@ -121,7 +127,7 @@ namespace RealEstateApp {
                     newWindow.Show();
                 }
                 else {
-                    Dashboard newWindow = new Dashboard(authedUser, authedUser.username == brokers[authedUser.office_id]);
+                    Dashboard newWindow = new Dashboard(authedUser, authedUser.username == brokers[authedUser.office_id], agentID);
                     newWindow.Show();
                     this.Close();
                 }

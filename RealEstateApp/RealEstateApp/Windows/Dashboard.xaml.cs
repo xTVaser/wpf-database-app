@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 using RealEstateApp.EntityModels;
+using System.Data.SqlClient;
 
 // TODO: finish interactions
 
@@ -26,12 +27,14 @@ namespace RealEstateApp {
         private Employee user;
         private string accountType;
         private bool isBroker;
+        private Int32? agentID;
 
-        public Dashboard(Employee user, bool isBroker) {
+        public Dashboard(Employee user, bool isBroker, Int32 agentID) {
 
             InitializeComponent();
             this.user = user;
             this.isBroker = isBroker;
+            this.agentID = agentID;
 
             if (isBroker)
                 accountType = "Broker";
@@ -68,8 +71,7 @@ namespace RealEstateApp {
                 newEmployeeBtn.Visibility = Visibility.Collapsed;
             }
             else
-                Console.WriteLine("stub");
-            //FillTab(employeeTab);
+                FillEmployeeTab(employeeGridView);
             
             // Everyone can see these tabs and content within
             FillOfficeTab(officeGridView);
@@ -167,14 +169,21 @@ namespace RealEstateApp {
             OfficeInfo newWindow = new OfficeInfo(item);
             newWindow.Show();
         }
-
-        // TODO: agents will only see their clients, right now it shows all
+        
         private void FillClientTab(ListView list) {
 
             // Fill tab with all offices information
             using (var context = new Model()) {
 
-                var queryResult = context.Clients.SqlQuery("SELECT * FROM Client").ToList();
+                List<Client> queryResult = new List<Client>();
+
+                // If the user is not an administrator then only display their clients
+                if (agentID != null) {
+                    SqlParameter idParam = new SqlParameter("id", agentID);
+                    queryResult = context.Clients.SqlQuery("SELECT * FROM Client WHERE assigned_agent = @id", idParam).ToList<Client>();
+                }
+                else
+                    queryResult = context.Clients.SqlQuery("SELECT * FROM Client").ToList();
 
                 foreach (Client c in queryResult) {
 
@@ -197,6 +206,58 @@ namespace RealEstateApp {
             var item = ((FrameworkElement)e.OriginalSource).DataContext as ClientItem;
             ClientInfo newWindow = new ClientInfo(item);
             newWindow.Show();
+        }
+
+        private void FillEmployeeTab(ListView list) {
+
+            // Get all of the employees and fill the list
+            using (var context = new Model()) {
+
+                // Only get the employees under the current brokers authority
+                SqlParameter idParam = new SqlParameter("id", user.office_id);
+
+                // employee listing
+                var employees = context.Employees.SqlQuery("SELECT * FROM Employee WHERE office_id = @id", idParam).ToList<Employee>();
+
+                foreach (Employee employee in employees) {
+
+                    EmployeeItem newItem = new EmployeeItem(employee.employee_type);
+                    newItem.FirstName = employee.first_name;
+                    newItem.LastName = employee.last_name;
+                    newItem.Email = employee.email;
+
+                    list.Items.Add(newItem);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Editing the employee involves just opening the same dialog for creating a new employee, but it is already populated
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuItem_editEmployee_Click(object sender, RoutedEventArgs e) {
+
+            var item = ((FrameworkElement)e.OriginalSource).DataContext as Employee;
+
+
+
+
+
+
+
+        }
+
+        /// <summary>
+        /// Firing an employee just opens a dialog box that depending on the response will perform the cascading deletion
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuItem_fireEmployee_Click(object sender, RoutedEventArgs e) {
+
+            // TODO test out the cascading deletion functionality
+
+
         }
     }
 }

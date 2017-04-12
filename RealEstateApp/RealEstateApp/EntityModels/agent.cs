@@ -31,7 +31,7 @@ namespace RealEstateApp.EntityModels
 
         public float commission_percentage { get; set; }
 
-        public float broker_share { get; set; }
+        public float? broker_share { get; set; }
 
         public virtual Employee Employee { get; set; }
     }
