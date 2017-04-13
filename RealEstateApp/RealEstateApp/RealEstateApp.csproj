@@ -139,7 +139,7 @@
     <Compile Include="Windows\Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EntityModels\Adminstrator.cs" />
+    <Compile Include="EntityModels\Administrator.cs" />
     <Compile Include="EntityModels\Agent.cs" />
     <Compile Include="EntityModels\Client.cs" />
     <Compile Include="EntityModels\Commission.cs" />

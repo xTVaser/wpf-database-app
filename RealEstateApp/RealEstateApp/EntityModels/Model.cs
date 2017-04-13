@@ -10,7 +10,7 @@ namespace RealEstateApp.EntityModels {
             : base("name=EntityModel") {
         }
 
-        public virtual DbSet<Adminstrator> Adminstrators { get; set; }
+        public virtual DbSet<Administrator> Adminstrators { get; set; }
         public virtual DbSet<Agent> Agents { get; set; }
         public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<Commission> Commissions { get; set; }
@@ -25,7 +25,7 @@ namespace RealEstateApp.EntityModels {
 
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
-            modelBuilder.Entity<Adminstrator>()
+            modelBuilder.Entity<Administrator>()
                 .Property(e => e.salary)
                 .HasPrecision(19, 4);
 

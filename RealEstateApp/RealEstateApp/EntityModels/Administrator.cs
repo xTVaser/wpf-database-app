@@ -7,7 +7,7 @@ namespace RealEstateApp.EntityModels
     using System.Data.Entity.Spatial;
 
     [Table("Adminstrator")]
-    public partial class Adminstrator
+    public partial class Administrator
     {
         [Key]
         [Column(Order = 0)]

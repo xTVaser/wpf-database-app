@@ -55,6 +55,20 @@ namespace RealEstateApp {
             return true;
         }
 
+        public static string randString(int length) {
+
+            string output = "";
+            char[] alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*(),.;'[]<>:_+".ToCharArray();
+            Random rnd = new Random();
+
+            for (int i = 0; i < length; i++) {
+
+                output += alpha[rnd.Next(0, alpha.Length)];
+            }
+
+            return output;
+        }
+
         public static Boolean CheckPostalCode(string s) {
 
             // Get rid of empty space

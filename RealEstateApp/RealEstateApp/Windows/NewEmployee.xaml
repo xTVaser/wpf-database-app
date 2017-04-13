@@ -5,16 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RealEstateApp"
         mc:Ignorable="d"
-        Title="New Employee" Height="500" Width="300">
+        Title="New Employee" Height="575" Width="300" Loaded="Window_Loaded">
 
     <Grid Margin="10">
-
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1.5*"/>
             <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="2*"/>
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
@@ -23,28 +29,64 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="50*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Content="Employee Type" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontWeight="Bold"/>
-        <Label Content="Salary" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" FontWeight="Bold"/>
-        <Label Content="Commission %" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" FontWeight="Bold"/>
-        <Label Content="Security Question" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" FontWeight="Bold"/>
-        <Label Content="Security Answer" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" FontWeight="Bold"/>
-        <Label Content="Randomly Generated Password" Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" FontWeight="Bold"/>
+        <Label Content="Username" 
+               Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1"/>
+        <Label Content="Email" 
+               Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1"/>
+        <Label Content="First Name" 
+               Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="1"/>
+        <Label Content="Last Name" 
+               Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="1"/>
+        <Label Content="Employee Type" 
+               Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" 
+               VerticalContentAlignment="Bottom"/>
+        <Label Content="Salary" 
+               Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="1"/>
+        <Label Content="Phone Number" 
+               Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="1"/>
+        <Label Content="Commission %" 
+               Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="1"/>
+        <Label Content="Broker Share %" 
+               Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="1"/>
+        <Label Content="Security Question" 
+               Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="2"
+               VerticalContentAlignment="Bottom"/>
+        <Label Content="Security Answer" 
+               Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="2"/>
+        <Label Content="Randomly Generated Password" 
+               Grid.Row="15" Grid.Column="0" Grid.ColumnSpan="2"/>
 
-        <Button Grid.Row="11" Grid.ColumnSpan="2" Margin="15" Content="Submit"/>
+        <TextBox Name="usernameField" Grid.Row="0" Grid.Column="1"></TextBox>
+        <TextBox Name="emailField" Grid.Row="1" Grid.Column="1"></TextBox>
+        <TextBox Name="firstNameField" Grid.Row="2" Grid.Column="1"></TextBox>
+        <TextBox Name="lastNameField" Grid.Row="3" Grid.Column="1"></TextBox>
 
-        <RadioButton Content="Administrator" Grid.Row="1" Grid.Column="0"></RadioButton>
-        <RadioButton Content="Agent" Grid.Row="1" Grid.Column="1"></RadioButton>
+        <RadioButton Content="Administrator" Name="adminBox" GroupName="group1"
+                     Grid.Row="5" Grid.Column="0" 
+                     HorizontalAlignment="Center" VerticalContentAlignment="Center" Checked="adminBox_Checked"/>
+        <RadioButton Content="Agent" Name="agentBox" GroupName="group1"
+                     Grid.Row="5" Grid.Column="1" 
+                     HorizontalAlignment="Center" VerticalContentAlignment="Center" Checked="agentBox_Checked"/>
 
-        <TextBox Grid.Row="3" Margin="5"></TextBox>
-        <TextBox Grid.Row="3" Grid.Column="1" Margin="5"></TextBox>
+        <TextBox Name="salaryField" Grid.Row="6" Grid.Column="1" IsEnabled="False"></TextBox>
+        
+        <TextBox Name="phoneNumberField" Grid.Row="8" Grid.Column="1" IsEnabled="False"></TextBox>
+        <TextBox Name="commissionField" Grid.Row="9" Grid.Column="1" IsEnabled="False"></TextBox>
+        <TextBox Name="brokerShareField" Grid.Row="10" Grid.Column="1" IsEnabled="False"></TextBox>
 
-        <TextBox Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="5"></TextBox>
-        <TextBox Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Margin="5"></TextBox>
+        <TextBox Name="securityQuestionField" 
+                 Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="2"></TextBox>
+        <TextBox Name="securityAnswerField" 
+                 Grid.Row="14" Grid.Column="0" Grid.ColumnSpan="2"></TextBox>
 
-        <Label Grid.Row="9" Grid.ColumnSpan="2" Content="Random Pass"></Label>
+        <TextBox Name="randPasswordField" Grid.Row="16" Grid.ColumnSpan="2" IsReadOnly="True"
+               FontWeight="Bold" Text="Test" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBox>
+
+        <Button Grid.Row="17" Grid.ColumnSpan="2" 
+                Margin="10" Content="Submit" Click="SubmitForm"/>
     </Grid>
 </Window>

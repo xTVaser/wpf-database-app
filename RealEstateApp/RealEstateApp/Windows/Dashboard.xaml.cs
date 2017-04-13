@@ -225,6 +225,8 @@ namespace RealEstateApp {
                     newItem.FirstName = employee.first_name;
                     newItem.LastName = employee.last_name;
                     newItem.Email = employee.email;
+                    newItem.Username = employee.username;
+                    newItem.OfficeID = employee.office_id;
 
                     list.Items.Add(newItem);
                 }
@@ -238,14 +240,9 @@ namespace RealEstateApp {
         /// <param name="e"></param>
         private void menuItem_editEmployee_Click(object sender, RoutedEventArgs e) {
 
-            var item = ((FrameworkElement)e.OriginalSource).DataContext as Employee;
-
-
-
-
-
-
-
+            var item = ((FrameworkElement)e.OriginalSource).DataContext as EmployeeItem;
+            NewEmployee newWindow = new NewEmployee(item, false); // false = we are editing an employee, not creating a new one
+            newWindow.Show();
         }
 
         /// <summary>
@@ -258,6 +255,19 @@ namespace RealEstateApp {
             // TODO test out the cascading deletion functionality
 
 
+        }
+
+        private void newEmployeeBtn_Click(object sender, RoutedEventArgs e) {
+
+            EmployeeItem newItem = new EmployeeItem(user.employee_type);
+            newItem.FirstName = user.first_name;
+            newItem.LastName = user.last_name;
+            newItem.Email = user.email;
+            newItem.Username = user.username;
+            newItem.OfficeID = user.office_id;
+
+            NewEmployee newWindow = new NewEmployee(newItem, true);
+            newWindow.Show();
         }
     }
 }
