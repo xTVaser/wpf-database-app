@@ -72,11 +72,11 @@
                      Grid.Row="5" Grid.Column="1" 
                      HorizontalAlignment="Center" VerticalContentAlignment="Center" Checked="agentBox_Checked"/>
 
-        <TextBox Name="salaryField" Grid.Row="6" Grid.Column="1" IsEnabled="False"></TextBox>
+        <TextBox Name="salaryField" Grid.Row="6" Grid.Column="1" IsEnabled="True"></TextBox>
         
-        <TextBox Name="phoneNumberField" Grid.Row="8" Grid.Column="1" IsEnabled="False"></TextBox>
-        <TextBox Name="commissionField" Grid.Row="9" Grid.Column="1" IsEnabled="False"></TextBox>
-        <TextBox Name="brokerShareField" Grid.Row="10" Grid.Column="1" IsEnabled="False"></TextBox>
+        <TextBox Name="phoneNumberField" Grid.Row="8" Grid.Column="1" IsEnabled="True"></TextBox>
+        <TextBox Name="commissionField" Grid.Row="9" Grid.Column="1" IsEnabled="True"></TextBox>
+        <TextBox Name="brokerShareField" Grid.Row="10" Grid.Column="1" IsEnabled="True"></TextBox>
 
         <TextBox Name="securityQuestionField" 
                  Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="2"></TextBox>
@@ -84,7 +84,7 @@
                  Grid.Row="14" Grid.Column="0" Grid.ColumnSpan="2"></TextBox>
 
         <TextBox Name="randPasswordField" Grid.Row="16" Grid.ColumnSpan="2" IsReadOnly="True"
-               FontWeight="Bold" Text="Test" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBox>
+               FontWeight="Bold" Text="" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBox>
 
         <Button Grid.Row="17" Grid.ColumnSpan="2" 
                 Margin="10" Content="Submit" Click="SubmitForm"/>

@@ -6,7 +6,7 @@ namespace RealEstateApp.EntityModels
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("Adminstrator")]
+    [Table("Administrator")]
     public partial class Administrator
     {
         [Key]

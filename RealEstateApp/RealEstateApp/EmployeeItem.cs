@@ -15,6 +15,16 @@ namespace RealEstateApp {
         public String Username { get; set; }
         public int OfficeID { get; set; }
 
+        public Decimal Salary { get; set; }
+        public String PhoneNumber { get; set; }
+        public float Commission { get; set; }
+        public float? BrokerShare { get; set; }
+
+        public String securityQuestion { get; set; }
+        public String securityAnswer { get; set; }
+
+        public String Type { get; set; }
+
         public EmployeeItem(String employeeType) {
 
             if (employeeType.Equals("A"))
@@ -23,6 +33,8 @@ namespace RealEstateApp {
                 Occupation = "Administrative Staff";
             else
                 Occupation = "Broker";
+
+            this.Type = employeeType;
         }
     }
 }

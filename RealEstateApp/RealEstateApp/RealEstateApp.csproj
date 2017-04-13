@@ -115,6 +115,17 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="EmployeeItem.cs" />
+    <Compile Include="EntityModels\Administrator.cs" />
+    <Compile Include="EntityModels\Agent.cs" />
+    <Compile Include="EntityModels\Client.cs" />
+    <Compile Include="EntityModels\Commission.cs" />
+    <Compile Include="EntityModels\Employee.cs" />
+    <Compile Include="EntityModels\Feature.cs" />
+    <Compile Include="EntityModels\Listing.cs" />
+    <Compile Include="EntityModels\Model.cs" />
+    <Compile Include="EntityModels\Offer.cs" />
+    <Compile Include="EntityModels\Office.cs" />
+    <Compile Include="EntityModels\StreetAddress.cs" />
     <Compile Include="OfferItem.cs" />
     <Compile Include="Windows\AddClient.xaml.cs">
       <DependentUpon>AddClient.xaml</DependentUpon>
@@ -139,17 +150,6 @@
     <Compile Include="Windows\Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EntityModels\Administrator.cs" />
-    <Compile Include="EntityModels\Agent.cs" />
-    <Compile Include="EntityModels\Client.cs" />
-    <Compile Include="EntityModels\Commission.cs" />
-    <Compile Include="EntityModels\Employee.cs" />
-    <Compile Include="EntityModels\Feature.cs" />
-    <Compile Include="EntityModels\Listing.cs" />
-    <Compile Include="EntityModels\Model.cs" />
-    <Compile Include="EntityModels\Offer.cs" />
-    <Compile Include="EntityModels\Office.cs" />
-    <Compile Include="EntityModels\StreetAddress.cs" />
     <Compile Include="HelperFunctions.cs" />
     <Compile Include="Windows\ForgotPassword.xaml.cs">
       <DependentUpon>ForgotPassword.xaml</DependentUpon>

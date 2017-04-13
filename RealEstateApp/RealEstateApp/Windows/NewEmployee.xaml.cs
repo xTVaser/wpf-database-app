@@ -36,13 +36,40 @@ namespace RealEstateApp {
         private void Window_Loaded(object sender, RoutedEventArgs e) {
 
             // If we are editing an employee change the title as well as fill in all of the fields
-            // TODO implement the editing
-            if (isNewEmployee is false)
+            if (isNewEmployee is false) {
+
                 Title = "Edit Employee";
+                // Disable the username field
+                usernameField.IsReadOnly = true;
+                adminBox.IsEnabled = false;
+                agentBox.IsEnabled = false;
 
+                // Fill the fields
+                usernameField.Text = item.Username;
+                emailField.Text = item.Email;
+                firstNameField.Text = item.FirstName;
+                lastNameField.Text = item.LastName;
+                securityQuestionField.Text = item.securityQuestion;
+                securityAnswerField.Text = item.securityAnswer;
 
+                if (item.Type.Equals("S")) {
+                    salaryField.Text = item.Salary.ToString();
 
+                    // Disable agent fields
+                    phoneNumberField.IsEnabled = false;
+                    commissionField.IsEnabled = false;
+                    brokerShareField.IsEnabled = false;
+                }
+                else {
+                    phoneNumberField.Text = item.PhoneNumber; // maybe need to pass to helper function
+                    commissionField.Text = item.Commission.ToString();
+                    if (item.BrokerShare != null)
+                        brokerShareField.Text = item.BrokerShare.ToString();
 
+                    // Disable administrator fields
+                    salaryField.IsEnabled = false;
+                }
+            }
         }
 
         /// <summary>
@@ -106,10 +133,18 @@ namespace RealEstateApp {
                                         typeParam, questionParam, answerParam, firstLoginParam};
 
                 try {
-                    context.Database.ExecuteSqlCommand("INSERT INTO Employee (username, office_id, password, email, first_name, last_name, employee_type, " +
-                                                        "security_question, security_answer, first_login) VALUES (@username, @oid, @pass, @email, @fname, @lname, " +
-                                                        "@type, @question, @answer, @firstLogin)", parameters);
-                    randPasswordField.Text = randPassword;
+
+                    if (isNewEmployee) {
+                        context.Database.ExecuteSqlCommand("INSERT INTO Employee (username, office_id, password, email, first_name, last_name, employee_type, " +
+                                                            "security_question, security_answer, first_login) VALUES (@username, @oid, @pass, @email, @fname, @lname, " +
+                                                            "@type, @question, @answer, @firstLogin)", parameters);
+                        randPasswordField.Text = randPassword;
+                    }
+                    else {
+                        context.Database.ExecuteSqlCommand("UPDATE Employee SET email = @email, first_name = @fname, last_name = @lname, " +
+                                                            "security_question = @question, security_answer = @answer WHERE username = @username AND office_id = @oid", parameters);
+                    }
+                    
                 }
                 catch (Exception ex) {
 
@@ -139,7 +174,13 @@ namespace RealEstateApp {
                     SqlParameter salaryParam = new SqlParameter("salary", salary);
                     Object[] parameters = { usernameParam, officeIdParam, salaryParam };
 
-                    context.Database.ExecuteSqlCommand("INSERT INTO Administrator VALUES (@username, @oid, @salary)", parameters);
+                    if (isNewEmployee) {
+                        context.Database.ExecuteSqlCommand("INSERT INTO Administrator VALUES (@username, @oid, @salary)", parameters);
+                    }
+                    else {
+                        context.Database.ExecuteSqlCommand("UPDATE Administrator SET salary = @salary WHERE employee_username = @username AND employee_office_id = @oid", parameters);
+                        Close();
+                    }
                 }
             }
 
@@ -151,7 +192,7 @@ namespace RealEstateApp {
                     bool parseAttemptOne = float.TryParse(commissionText, out commission);
                     bool parseAttemptTwo = float.TryParse(brokerShareText, out brokerShare);
 
-                    if (parseAttemptOne is false || parseAttemptTwo is false || commission < 0 || brokerShare < 0 ||
+                    if (parseAttemptOne is false || parseAttemptTwo is false || commission < 0 || brokerShare < 0 || commission > 100 || brokerShare > 100 ||
                         phoneNumber.Length > 10 || HelperFunctions.StringNumeric(phoneNumber) is false) {
                         MessageBox.Show("Agent related fields are incorrect", "Incorrect Fields");
                         return;
@@ -164,8 +205,15 @@ namespace RealEstateApp {
                     SqlParameter commissionParam = new SqlParameter("commission", commission);
                     SqlParameter shareParam = new SqlParameter("share", brokerShare);
                     Object[] parameters = { usernameParam, officeIdParam, phoneParam, balanceParam, commissionParam, shareParam };
-                    
-                    context.Database.ExecuteSqlCommand("INSERT INTO Agent VALUES (@username, @oid, @phone, @bal, @comission, @share)", parameters);
+
+                    if (isNewEmployee) {
+                        context.Database.ExecuteSqlCommand("INSERT INTO Agent VALUES (@username, @oid, @phone, @bal, @comission, @share)", parameters);
+                    }
+                    else {
+                        context.Database.ExecuteSqlCommand("UPDATE Agent SET phone_number = @phone, commission_percentage = @commission, broker_share = @share" +
+                                                            "WHERE employee_username = @username AND employee_office_id = @oid", parameters);
+                        Close();
+                    }
                 }
             }
 
@@ -174,7 +222,6 @@ namespace RealEstateApp {
 
         private void adminBox_Checked(object sender, RoutedEventArgs e) {
             
-        
             // Enable administrator fields
             salaryField.IsEnabled = true;
 

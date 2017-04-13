@@ -3,14 +3,13 @@ namespace RealEstateApp.EntityModels {
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
-    using System.Data.Entity.ModelConfiguration.Conventions;
 
     public partial class Model : DbContext {
         public Model()
             : base("name=EntityModel") {
         }
 
-        public virtual DbSet<Administrator> Adminstrators { get; set; }
+        public virtual DbSet<Administrator> Administrators { get; set; }
         public virtual DbSet<Agent> Agents { get; set; }
         public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<Commission> Commissions { get; set; }
@@ -22,9 +21,6 @@ namespace RealEstateApp.EntityModels {
         public virtual DbSet<StreetAddress> StreetAddresses { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder) {
-
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-
             modelBuilder.Entity<Administrator>()
                 .Property(e => e.salary)
                 .HasPrecision(19, 4);
@@ -74,7 +70,7 @@ namespace RealEstateApp.EntityModels {
                 .IsUnicode(false);
 
             modelBuilder.Entity<Employee>()
-                .HasOptional(e => e.Adminstrator)
+                .HasOptional(e => e.Administrator)
                 .WithRequired(e => e.Employee);
 
             modelBuilder.Entity<Employee>()

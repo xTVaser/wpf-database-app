@@ -49,7 +49,7 @@ namespace RealEstateApp.EntityModels
 
         public bool first_login { get; set; }
 
-        public virtual Administrator Adminstrator { get; set; }
+        public virtual Administrator Administrator { get; set; }
 
         public virtual Agent Agent { get; set; }
 

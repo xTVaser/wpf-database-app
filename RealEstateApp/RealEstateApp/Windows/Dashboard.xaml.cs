@@ -227,6 +227,16 @@ namespace RealEstateApp {
                     newItem.Email = employee.email;
                     newItem.Username = employee.username;
                     newItem.OfficeID = employee.office_id;
+                    newItem.securityQuestion = employee.security_question;
+                    newItem.securityAnswer = employee.security_answer;
+
+                    if (employee.Administrator != null || employee.employee_type.Equals("S"))
+                        newItem.Salary = employee.Administrator.salary;
+                    else if (employee.Agent != null) {
+                        newItem.PhoneNumber = employee.Agent.phone_number;
+                        newItem.Commission = employee.Agent.commission_percentage;
+                        newItem.BrokerShare = employee.Agent.broker_share;
+                    }
 
                     list.Items.Add(newItem);
                 }
