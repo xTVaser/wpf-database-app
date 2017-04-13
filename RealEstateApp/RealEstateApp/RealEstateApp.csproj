@@ -90,10 +90,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\AgentInfo.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Windows\ClientInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -135,9 +131,6 @@
     </Compile>
     <Compile Include="Windows\AddOffer.xaml.cs">
       <DependentUpon>AddOffer.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\AgentInfo.xaml.cs">
-      <DependentUpon>AgentInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>

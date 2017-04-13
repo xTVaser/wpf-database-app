@@ -80,8 +80,8 @@
                 Margin="4"
                 Click="RemoveListing"/>
             <Button
-                Content="Contact Seller"
-                MinWidth="100"
+                Content="Contact Seller's Agent"
+                MinWidth="150"
                 Margin="4"
                 Click="ContactSeller"/>
 

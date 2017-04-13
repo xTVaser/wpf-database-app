@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 using RealEstateApp.EntityModels;
 using System.Data.SqlClient;
 
-// TODO: finish interactions
+// TODO: Finish Balance Tab
 
 namespace RealEstateApp {
 
@@ -257,12 +257,13 @@ namespace RealEstateApp {
 
         /// <summary>
         /// Firing an employee just opens a dialog box that depending on the response will perform the cascading deletion
+        /// If it is an agent, we do not delete the account, just turn it inactive, otherwise if it is an admin, just delete it.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void menuItem_fireEmployee_Click(object sender, RoutedEventArgs e) {
 
-            // TODO test out the cascading deletion functionality
+            // TODO support deletion
 
 
         }

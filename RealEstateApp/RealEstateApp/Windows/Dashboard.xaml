@@ -135,9 +135,8 @@
                 Content="New Employee"
                 HorizontalAlignment="Right"
                 MinWidth="150"
-                Margin="5" Click="newEmployeeBtn_Click"
-                
-                >
+                Margin="5" 
+                Click="newEmployeeBtn_Click">
             </Button> <!-- Only brokers can do this -->
         </StackPanel>
     </Grid>
