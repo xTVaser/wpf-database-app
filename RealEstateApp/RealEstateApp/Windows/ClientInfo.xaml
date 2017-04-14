@@ -13,65 +13,39 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
             <RowDefinition Height="4*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel
-            MinWidth="200"
-            Grid.Row="0"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center">
-
-            <Label Content="Client Name" FontWeight="Bold"/>
-            <Label Name="clientName" Content=""/>
-        </StackPanel>
-        
-        <StackPanel
-            MinWidth="200"
-            Grid.Row="1"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center">
-
-            <Label Content="Phone Number" FontWeight="Bold"/>
-            <Label Name="phoneNumber" Content=""/>
-        </StackPanel>
-
-        <StackPanel
-            MinWidth="200"
-            Grid.Row="2"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center">
-
-            <Label Content="Email" FontWeight="Bold"/>
-            <Label Name="email" Content=""/>
-        </StackPanel>
-
-        <StackPanel
-            MinWidth="200"
-            Grid.Row="3"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center">
-
-            <Label Content="Assigned Agent Name" FontWeight="Bold"/>
-            <Label Name="assignedAgentName" Content=""/>
-        </StackPanel>
-
-        <StackPanel
-            MinWidth="270"
-            Grid.Row="4"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top">
-
-            <Label Content="Offers" FontWeight="Bold"/>
-            <ListView Name="offerGridView" FontSize="10">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Address" DisplayMemberBinding="{Binding Path=Address}"/>
-                        <GridViewColumn Header="Amount" DisplayMemberBinding="{Binding Path=Amount}"/>
-                        <GridViewColumn Header="Date Offered" DisplayMemberBinding="{Binding Path=DateOffered}"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </StackPanel>
+        <Label Grid.Row="0" 
+               Content="Client Name" FontWeight="Bold"/>
+        <Label Grid.Row="1" 
+               Name="clientName" Content=""/>
+        <Label Grid.Row="2" 
+               Content="Phone Number" FontWeight="Bold"/>
+        <Label Grid.Row="3" 
+               Name="phoneNumber" Content=""/>
+        <Label Grid.Row="4" 
+               Content="Email" FontWeight="Bold"/>
+        <Label Grid.Row="5" 
+               Name="email" Content=""/>
+        <Label Grid.Row="6" 
+               Content="Assigned Agent Name" FontWeight="Bold"/>
+        <Label Grid.Row="7" 
+               Name="assignedAgentName" Content=""/>
+        <Label Grid.Row="8" 
+               Content="Offers" FontWeight="Bold"/>
+        <ListView Grid.Row="9" Name="offerGridView" FontSize="10">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Address" DisplayMemberBinding="{Binding Path=Address}"/>
+                    <GridViewColumn Header="Amount" DisplayMemberBinding="{Binding Path=Amount}"/>
+                    <GridViewColumn Header="Date Offered" DisplayMemberBinding="{Binding Path=DateOffered}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>

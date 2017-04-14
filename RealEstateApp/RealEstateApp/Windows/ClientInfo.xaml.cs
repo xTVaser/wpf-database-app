@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 using RealEstateApp.EntityModels;
+using System.Data.SqlClient;
 
 namespace RealEstateApp {
 
@@ -41,7 +42,7 @@ namespace RealEstateApp {
 
                 using (var context = new Model()) {
 
-                    var queryResult = context.Agents.SqlQuery("SELECT FROM Agent WHERE id = @id", item.agentId).FirstOrDefault<Agent>();
+                    var queryResult = context.Agents.SqlQuery("SELECT * FROM Agent WHERE id = @id", new SqlParameter("id", item.agentId)).FirstOrDefault<Agent>();
 
                     assignedAgentName.Content = queryResult.Employee.first_name + queryResult.Employee.last_name;
                 }
@@ -52,7 +53,7 @@ namespace RealEstateApp {
             // Fill any offers they may have
             using (var context = new Model()) {
 
-                var queryResults = context.Offers.SqlQuery("SELECT FROM Offer WHERE client_id = @client", item.id).ToList<Offer>();
+                var queryResults = context.Offers.SqlQuery("SELECT * FROM Offer WHERE client_id = @client", new SqlParameter("client", item.id)).ToList<Offer>();
 
                 foreach (Offer o in queryResults) {
 

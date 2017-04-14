@@ -61,10 +61,10 @@
                 Margin="4"
                 Click="AddOffer"/>
             <Button
-                Content="Remove Listing"
+                Content="Close Listing"
                 MinWidth="100"
                 Margin="4"
-                Click="RemoveListing"/>
+                Click="CloseListing"/>
             <Button
                 Content="Contact Seller"
                 MinWidth="100"
