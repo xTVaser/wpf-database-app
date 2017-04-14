@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using RealEstateApp.EntityModels;
+
 namespace RealEstateApp {
 
     public class ListingItem {
+
+        public Listing originalItem { get; set; }
 
         public int id { get; set; }
         public string Address { get; set; }

@@ -122,6 +122,7 @@
     <Compile Include="EntityModels\Offer.cs" />
     <Compile Include="EntityModels\Office.cs" />
     <Compile Include="EntityModels\StreetAddress.cs" />
+    <Compile Include="FeatureItem.cs" />
     <Compile Include="OfferItem.cs" />
     <Compile Include="Windows\AddClient.xaml.cs">
       <DependentUpon>AddClient.xaml</DependentUpon>

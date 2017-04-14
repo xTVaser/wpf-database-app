@@ -51,6 +51,8 @@ namespace RealEstateApp {
         /// <param name="e"></param>
         private void Window_Loaded(object sender, RoutedEventArgs e) {
 
+            // TODO check that every user has the tabs filled that they are supposed to
+
             // Hide tabs that aren't needed for the particular user
             // If Administrator, do not need to see balance or employee tabs.
             if (user.employee_type.Equals("S")) {
@@ -118,6 +120,8 @@ namespace RealEstateApp {
                     newItem.Bathrooms = l.num_bathrooms;
                     newItem.Stories = l.num_stories;
                     newItem.AskingPriceDecimal = l.asking_price;
+
+                    newItem.originalItem = l;
 
                     list.Items.Add(newItem);
                 }

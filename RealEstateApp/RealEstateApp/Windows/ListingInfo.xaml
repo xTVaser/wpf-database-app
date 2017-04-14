@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RealEstateApp"
         mc:Ignorable="d"
-        Title="Listing Info" Height="500" Width="500" ResizeMode="NoResize">
+        Title="Listing Info" Height="500" Width="500" ResizeMode="NoResize" Loaded="Window_Loaded">
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="4*"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="8*"/>
+            <RowDefinition Height="7*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -22,41 +22,27 @@
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Content="Listing #:" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontWeight="Bold"></Label>
-        <Label Content="Address Info" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" FontWeight="Bold"></Label>
-        <StackPanel
-            MinWidth="150"
-            Grid.Row="2"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top">
+        <Label Content="Listing #" Name="listingIDLabel" 
+               Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
+               FontWeight="Bold"></Label>
+        <Label Content="Listing Address" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" FontWeight="Bold"></Label>
 
-            <Label Content="Phone Number"/>
-            
-        </StackPanel>
-        <Label Content="Features" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalContentAlignment="Center" FontWeight="Bold"></Label>
-        <ListView
-            Grid.Row="4">
-            <ListViewItem>
-                <Label Content="sample"></Label>
-            </ListViewItem>
-        </ListView>
+        <TextBlock Name="listingAddress" Grid.Row="2" Grid.Column="0" TextWrapping="WrapWithOverflow"></TextBlock>
 
-        <ListView
-            Grid.Row="4"
-            Grid.Column="1">
-            <ListViewItem>
-                <Label Content="sample"></Label>
-            </ListViewItem>
-        </ListView>
+        <Image Name="listingImage"
+               Grid.Row="0" Grid.Column="1" 
+               Grid.RowSpan="3" Grid.ColumnSpan="2"></Image>
+        
+        <Label Content="Listing Features" Grid.Row="3" Grid.Column="0" FontWeight="Bold"></Label>
 
-        <ListView
-            Grid.Row="4"
-            Grid.Column="2">
-            <ListViewItem>
-                <Label Content="sample"></Label>
-            </ListViewItem>
+        <ListView Name="featureGridView" 
+                  Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Feature Name" DisplayMemberBinding="{Binding Path=Header}"/>
+                    <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Path=Description}"/>
+                </GridView>
+            </ListView.View>
         </ListView>
 
         <StackPanel
@@ -64,7 +50,6 @@
             Grid.Row="5"
             Grid.ColumnSpan="3"
             HorizontalAlignment="Center">
-
             <Button
                 Content="Add Feature"
                 MinWidth="100"
@@ -80,19 +65,10 @@
                 Margin="4"
                 Click="RemoveListing"/>
             <Button
-                Content="Contact Seller's Agent"
-                MinWidth="150"
+                Content="Contact Seller"
+                MinWidth="100"
                 Margin="4"
                 Click="ContactSeller"/>
-
-
         </StackPanel>
-
-        <Image
-            Grid.Row="0"
-            Grid.Column="2"
-            Grid.RowSpan="3">
-        </Image>
-
     </Grid>
 </Window>
