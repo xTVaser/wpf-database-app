@@ -77,8 +77,15 @@ namespace RealEstateApp {
             newWindow.Show();
         }
 
+        /// <summary>
+        /// Add offer button is clicked, another popup in order to add an offer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddOffer(object sender, RoutedEventArgs e) {
 
+            AddOffer newWindow = new AddOffer(item.id);
+            newWindow.Show();
         }
 
         private void RemoveListing(object sender, RoutedEventArgs e) {

@@ -14,7 +14,7 @@
             <RowDefinition Height="4*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="7*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1.5*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -49,11 +49,12 @@
             Orientation="Horizontal"
             Grid.Row="5"
             Grid.ColumnSpan="3"
-            HorizontalAlignment="Center">
+            HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button
                 Content="Add Feature"
                 MinWidth="100"
-                Margin="4" Click="AddFeature"/>
+                Margin="4" 
+                Click="AddFeature"/>
             <Button
                 Content="Add Offer"
                 MinWidth="100"
