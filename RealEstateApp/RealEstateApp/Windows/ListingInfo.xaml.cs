@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 using RealEstateApp.EntityModels;
+using System.Data.SqlClient;
 
 namespace RealEstateApp {
     /// <summary>
@@ -52,6 +53,15 @@ namespace RealEstateApp {
             featureGridView.Items.Add(new FeatureItem("Number of Bathrooms", item.Bathrooms.ToString()));
             featureGridView.Items.Add(new FeatureItem("Number of Stories", item.Stories.ToString()));
             featureGridView.Items.Add(new FeatureItem("Has Garage?", originalItem.has_garage.ToString()));
+
+            // Add the addition features
+            using (var context = new Model()) {
+
+                var features = context.Features.SqlQuery("SELECT * FROM Feature WHERE listing_id = @id", new SqlParameter("id", item.id)).ToList<Feature>();
+
+                foreach (Feature f in features)
+                    featureGridView.Items.Add(new FeatureItem(f.heading, f.body));
+            }
 
             // TODO Display picture here
         }

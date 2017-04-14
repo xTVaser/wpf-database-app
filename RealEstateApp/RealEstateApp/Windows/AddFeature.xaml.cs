@@ -51,7 +51,7 @@ namespace RealEstateApp {
 
                 Object[] parameters = { idParam, headerParam, descriptionParam };
 
-                context.Features.SqlQuery("INSERT INTO Feature (listing_id, heading, body) VALUES (@id, @header, @description)", parameters);
+                context.Database.ExecuteSqlCommand("INSERT INTO Feature (listing_id, heading, body) VALUES (@id, @header, @description)", parameters);
             }
 
             FeatureItem newItem = new FeatureItem(header, description);
