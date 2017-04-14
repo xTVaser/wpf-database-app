@@ -14,8 +14,10 @@ using System.Windows.Shapes;
 
 using RealEstateApp.EntityModels;
 using System.Data.SqlClient;
+using System.IO;
 
 namespace RealEstateApp {
+
     /// <summary>
     /// Interaction logic for ListingInfo.xaml
     /// </summary>
@@ -62,8 +64,24 @@ namespace RealEstateApp {
                 foreach (Feature f in features)
                     featureGridView.Items.Add(new FeatureItem(f.heading, f.body));
             }
+            
+            // Set Display picture
+            if (originalItem.display_picture != null) {
+                
+                using (MemoryStream ms = new MemoryStream(originalItem.display_picture)) {
+                    
+                    // Read in the Byte Array
+                    ms.Position = 0;
+                    var img = new BitmapImage();
+                    img.BeginInit();
+                    img.CacheOption = BitmapCacheOption.OnLoad;
+                    img.StreamSource = ms;
+                    img.EndInit();
 
-            // TODO Display picture here
+                    // Display in window
+                    listingImage.Source = img;
+                }
+            }
         }
 
         /// <summary>

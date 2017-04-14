@@ -31,7 +31,8 @@
 
         <Image Name="listingImage"
                Grid.Row="0" Grid.Column="1" 
-               Grid.RowSpan="3" Grid.ColumnSpan="2"></Image>
+               Grid.RowSpan="3" Grid.ColumnSpan="2">
+        </Image>
         
         <Label Content="Listing Features" Grid.Row="3" Grid.Column="0" FontWeight="Bold"></Label>
 

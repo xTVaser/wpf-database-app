@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using RealEstateApp.EntityModels;
 using System.Data.SqlClient;
 using System.Data;
+using System.Drawing;
+using System.IO;
 
 namespace RealEstateApp {
 
@@ -26,6 +28,7 @@ namespace RealEstateApp {
         private bool clientSelected = false;
         private List<int> clientIDs = new List<int>();
         private string imageFilePath = null;
+        private byte[] selectedImageData = null;
 
         public NewListing() {
 
@@ -43,7 +46,7 @@ namespace RealEstateApp {
             using (var context = new Model()) {
 
                 // Query the DB
-                var queryResults = context.Database.SqlQuery<Client>("SELECT * from client").ToList<Client>();
+                var queryResults = context.Database.SqlQuery<Client>("SELECT * FROM Client").ToList<Client>();
                 
                 // Add all of the clients into the list so they can be queried later on
                 foreach (Client c in queryResults) {
@@ -56,6 +59,10 @@ namespace RealEstateApp {
                 if (clientIDs.Count == 0)
                     existingClientList.IsEnabled = false;
             }
+
+            // Limit Date Ranges
+            yearBuiltField.DisplayDateEnd = DateTime.Today;
+            yearBuiltField.DisplayDateStart = DateTime.Today.AddYears(-250); // Subtract 250 years for the first ever possbily built house
         }
 
         /// <summary>
@@ -112,7 +119,7 @@ namespace RealEstateApp {
             }
             // otherwise, we have to just find the client's ID
             else 
-                sellerID = clientIDs.ElementAt(existingClientList.SelectedIndex);
+                sellerID = clientIDs.ElementAt(existingClientList.SelectedIndex-1);
 
             // TODO: check if clients dont all get changed to sellers, suspicious
             // TODO: also, make the existing client a seller/buyer if they are currently just a buyer.
@@ -154,11 +161,11 @@ namespace RealEstateApp {
             Int32 addressID = 0;
             using (var context = new Model()) {
 
-                context.Database.ExecuteSqlCommand("INSERT INTO street_address (address_num, street, street_type, city, province_short, postal_code)" +
+                context.Database.ExecuteSqlCommand("INSERT INTO StreetAddress (address_num, street, street_type, city, province_short, postal_code)" +
                                                    "VALUES (@num, @name, @type, @city, @province, @postalcode)", parameters);
 
                 // Get the foreign key ID
-                var result = context.StreetAddresses.SqlQuery("SELECT * FROM street_address WHERE ID = IDENT_CURRENT('street_address')").FirstOrDefault<StreetAddress>();
+                var result = context.StreetAddresses.SqlQuery("SELECT * FROM StreetAddress WHERE ID = IDENT_CURRENT('StreetAddress')").FirstOrDefault<StreetAddress>();
                 addressID = result.id;
             }
 
@@ -208,9 +215,7 @@ namespace RealEstateApp {
             // TODO dates are not validated
 
             DateTime dateListed = DateTime.Today;
-
-            // TODO display picture here
-
+            
             // Insert into database
             using (var context = new Model()) {
 
@@ -225,7 +230,7 @@ namespace RealEstateApp {
                 yearBuiltParam.Value = yearBuilt;
                 SqlParameter sqFootageParam = new SqlParameter("sqfootage", squareFootage); //optional
                 SqlParameter lotSizeParam = new SqlParameter("lotsize", lotSize); //optional
-                // Display picture // optional
+                SqlParameter pictureParam = new SqlParameter("picture", selectedImageData); //optional
                 SqlParameter timestamp = new SqlParameter("timestamp", SqlDbType.DateTime);
                 timestamp.Value = dateListed;
 
@@ -240,15 +245,18 @@ namespace RealEstateApp {
                     sqFootageParam.Value = DBNull.Value;
                 if (lotSize <= 0)
                     lotSizeParam.Value = DBNull.Value;
+                if (selectedImageData == null)
+                    pictureParam.Value = DBNull.Value;
 
                 parameters = new object[] { addressFK, sellerFK, askingPriceParam, numBedParam, numBathParam, numStoriesParam,
-                    hasGarageParam, yearBuiltParam, sqFootageParam, lotSizeParam, timestamp };
+                    hasGarageParam, yearBuiltParam, sqFootageParam, lotSizeParam, pictureParam, timestamp };
 
-                context.Database.ExecuteSqlCommand("INSERT INTO listing (address_id, seller_id, asking_price, num_bedrooms, num_bathrooms, " +
-                                                   "num_stories, has_garage, year_built, square_footage, lot_size, date_listed)" +
+                context.Database.ExecuteSqlCommand("INSERT INTO Listing (address_id, seller_id, asking_price, num_bedrooms, num_bathrooms, " +
+                                                   "num_stories, has_garage, year_built, square_footage, lot_size, display_picture, date_listed)" +
                                                    "VALUES (@addrFK, @sellerFK, @askingprice, @bed, @bath," +
-                                                   "@stories, @garage, @yearbuilt, @sqfootage, @lotsize, @timestamp)", parameters);
+                                                   "@stories, @garage, @yearbuilt, @sqfootage, @lotsize, @picture, @timestamp)", parameters);
 
+                // TODO should update the list immediately
                 Close();
             }
         }
@@ -261,19 +269,23 @@ namespace RealEstateApp {
         private void OpenFileBrowser(object sender, RoutedEventArgs e) {
 
             Microsoft.Win32.OpenFileDialog fileDialog = new Microsoft.Win32.OpenFileDialog();
-            fileDialog.Filter = "Image Files (*.png, *.jpg, *.bmp, *.jpeg)|*.png;*.jpg;*.bmp;*.jpeg";
+            fileDialog.Filter = "Image Files (*.jpg, *.jpeg)|*.jpg;*.jpeg";
 
             bool? result = fileDialog.ShowDialog();
 
             if (result is true) {
 
                 imageFilePath = fileDialog.FileName;
-                // TODO: actually store the image http://stackoverflow.com/questions/21601858/insert-picturebox-image-into-sql-server-database
-                // might need to filter the images if they arent all supported
+
+                // Make the image holder
+                System.Drawing.Image selectedImage = System.Drawing.Image.FromFile(imageFilePath);
+                // Convert to byte array to store in DB
+                using (MemoryStream ms = new MemoryStream()) {
+
+                    selectedImage.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    selectedImageData = ms.ToArray();
+                }
             }
-
         }
-
-        
     }
 }

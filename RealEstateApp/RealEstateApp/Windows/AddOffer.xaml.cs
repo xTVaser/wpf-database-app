@@ -85,7 +85,7 @@ namespace RealEstateApp {
 
                     SqlParameter amountParam = new SqlParameter("amount", amount);
                     SqlParameter dateParam = new SqlParameter("today", DateTime.Today);
-                    SqlParameter clientParam = new SqlParameter("cid", clientIDs.ElementAt(clientBox.SelectedIndex-1)); // TODO check other uses of combobox to see if i made a similar mistake
+                    SqlParameter clientParam = new SqlParameter("cid", clientIDs.ElementAt(clientBox.SelectedIndex-1));
                     SqlParameter listingParam = new SqlParameter("lid", listingId);
 
                     Object[] parameters = { amountParam, dateParam, clientParam, listingParam };
