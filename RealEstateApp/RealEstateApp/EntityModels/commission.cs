@@ -16,8 +16,8 @@ namespace RealEstateApp.EntityModels
         [Column(TypeName = "money")]
         public decimal amount { get; set; }
 
+        [Column(TypeName = "text")]
         [Required]
-        [StringLength(50)]
         public string reason { get; set; }
 
         public DateTime date_payed_out { get; set; }

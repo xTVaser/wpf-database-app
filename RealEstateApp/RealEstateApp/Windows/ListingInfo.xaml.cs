@@ -96,10 +96,57 @@ namespace RealEstateApp {
         /// <param name="e"></param>
         private void CloseListing(object sender, RoutedEventArgs e) {
 
+            // First, find the highest offer on the house, if there are no offers skip the next step
+            using (var context = new Model()) {
 
+                var offers = context.Offers.SqlQuery("SELECT * FROM Offer WHERE listing_id = @id ORDER BY amount DESC", 
+                    new SqlParameter("id", item.id)).ToList<Offer>();
 
+                // If no offers, skip the payment calculations
+                if (offers.Count > 0) {
 
+                    decimal highestAmount = offers.ElementAt(0).amount;
 
+                    // Check to see if the seller has an agent
+                    var seller = context.Clients.SqlQuery("SELECT * FROM Client WHERE id = @id", new SqlParameter("id", originalItem.seller_id)).FirstOrDefault<Client>();
+                    
+                    if (seller.assigned_agent != null) {
+
+                        var agent = context.Agents.SqlQuery("SELECT * FROM Agent WHERE id = @id", new SqlParameter("id", seller.assigned_agent)).FirstOrDefault<Agent>();
+
+                        // Next calculate what the agent will get as a commission and what the broker will get 
+                        decimal agentAmount = (decimal)((float)highestAmount * (agent.commission_percentage / 100));
+                        // Next calculate the amount that the broker gets from the agent's commission
+                        decimal brokerAmount = (decimal)((float)agentAmount * (agent.broker_share / 100));
+
+                        // Distribute payments
+                        // TODO if broker, skip second payment which would be a double commission records
+                        // Insert the two commissions into the database
+                        context.Database.ExecuteSqlCommand("INSERT INTO Commission VALUES (@id, @amount, @reason, @date)",
+                            new SqlParameter("id", agent.id),
+                            new SqlParameter("amount", agentAmount),
+                            new SqlParameter("reason", "Commission for Closing of Listing: " + item.Address),
+                            new SqlParameter("date", DateTime.Now));
+
+                        // Get the broker's information
+                        var broker = context.Agents.SqlQuery("SELECT * FROM Agent WHERE employee_username = @brokername AND employee_office_id = @id",
+                            new SqlParameter("brokername", agent.Employee.Office.broker_username),
+                            new SqlParameter("id", agent.employee_office_id)).FirstOrDefault<Agent>();
+
+                        // Get the broker's ID
+                        context.Database.ExecuteSqlCommand("INSERT INTO Commission VALUES (@id, @amount, @reason, @date)",
+                            new SqlParameter("id", broker.id),
+                            new SqlParameter("amount", brokerAmount),
+                            new SqlParameter("reason", "Commission for Closing of Listing: " + item.Address),
+                            new SqlParameter("date", DateTime.Now));
+                    }
+                }
+
+                // TODO this
+                // Next we need to start deleting everything
+                // First manually delete seller if the seller does not have any other houses
+                // Cascading deletion for Offers / Address / Features > Listing itself
+            }
         }
 
         /// <summary>
