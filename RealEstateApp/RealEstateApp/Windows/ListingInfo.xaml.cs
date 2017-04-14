@@ -63,7 +63,7 @@ namespace RealEstateApp {
         /// <param name="e"></param>
         private void AddFeature(object sender, RoutedEventArgs e) {
 
-            AddFeature newWindow = new AddFeature(item.id);
+            AddFeature newWindow = new AddFeature(item.id, featureGridView);
             newWindow.Show();
         }
 
