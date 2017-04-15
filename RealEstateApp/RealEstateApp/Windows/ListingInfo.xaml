@@ -52,16 +52,19 @@
             Grid.ColumnSpan="3"
             HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button
+                Name="featureBtn"
                 Content="Add Feature"
                 MinWidth="100"
                 Margin="4" 
                 Click="AddFeature"/>
             <Button
+                Name="offerBtn"
                 Content="Add Offer"
                 MinWidth="100"
                 Margin="4"
                 Click="AddOffer"/>
             <Button
+                Name="closeBtn"
                 Content="Close Listing"
                 MinWidth="100"
                 Margin="4"

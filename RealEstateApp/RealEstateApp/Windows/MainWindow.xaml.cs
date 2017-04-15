@@ -90,7 +90,8 @@ namespace RealEstateApp {
                 var queryResult = context.Employees.SqlQuery("SELECT * FROM employee WHERE username = @username AND office_id = @id", parameters).FirstOrDefault<Employee>();
 
                 // If no result, then there is no user with those credentials
-                if (queryResult == null)
+                // Also if they are fired, dont let them login
+                if (queryResult == null || (queryResult != null && queryResult.fired != null))
                     MessageBox.Show("User not found", "Failed Login");
 
                 // If only the password was wrong, ask if they'd like to change password
@@ -99,9 +100,6 @@ namespace RealEstateApp {
 
                         ForgotPassword newWindow = new ForgotPassword(queryResult, "Forgot Password");
                         newWindow.Show();
-                    }
-                    else {
-                        // Do nothing
                     }
                 }
                 // Otherwise, valid login, continue

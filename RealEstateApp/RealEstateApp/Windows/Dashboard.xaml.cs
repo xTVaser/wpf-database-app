@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 
 using RealEstateApp.EntityModels;
 using System.Data.SqlClient;
+using System.ComponentModel;
 
 namespace RealEstateApp {
 
@@ -137,7 +138,7 @@ namespace RealEstateApp {
         private void listGridView_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
 
             var item = ((FrameworkElement)e.OriginalSource).DataContext as ListingItem;
-            ListingInfo newWindow = new ListingInfo(item, listingGridView);
+            ListingInfo newWindow = new ListingInfo(item, listingGridView, user);
             newWindow.Show();
         }
 
@@ -233,6 +234,9 @@ namespace RealEstateApp {
 
                 foreach (Employee employee in employees) {
 
+                    if (employee.fired != null)
+                        continue;
+
                     EmployeeItem newItem = new EmployeeItem(employee.employee_type);
                     newItem.FirstName = employee.first_name;
                     newItem.LastName = employee.last_name;
@@ -302,7 +306,34 @@ namespace RealEstateApp {
         /// <param name="e"></param>
         private void menuItem_fireEmployee_Click(object sender, RoutedEventArgs e) {
 
-            // TODO support deletion
+            var item = ((FrameworkElement)e.OriginalSource).DataContext as EmployeeItem;
+
+            // Confirm the firing of an employee
+            if (MessageBox.Show("Are you sure you want to fire this employee?", "Removal Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes) {
+
+                using (var context = new Model()) {
+
+                    // An administrator can just simple be removed from the system
+                    if (item.Type.Equals("S")) {
+
+                        context.Database.ExecuteSqlCommand("DELETE FROM Employee WHERE username = @username AND office_id = @id",
+                            new SqlParameter("username", item.Username),
+                            new SqlParameter("id", item.OfficeID));
+                    }
+                    // Else it's an agent, we cant delete it because monetary records are involved so we will just make the agent unable to login
+                    else {
+
+                        context.Database.ExecuteSqlCommand("UPDATE Employee SET fired = 1 WHERE username = @username AND office_id = @id",
+                            new SqlParameter("username", item.Username),
+                            new SqlParameter("id", item.OfficeID));
+                    }
+
+                    // In any event, update the employee list
+                    employeeGridView.Items.Remove(item);
+                    ICollectionView view = CollectionViewSource.GetDefaultView(employeeGridView.Items);
+                    view.Refresh();
+                }
+            }
         }
 
         /// <summary>

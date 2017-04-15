@@ -27,18 +27,26 @@ namespace RealEstateApp {
         private ListingItem item;
         private Listing originalItem;
         private ListView list;
+        private Employee user;
 
-        public ListingInfo(ListingItem item, ListView list) {
+        public ListingInfo(ListingItem item, ListView list, Employee user) {
 
             InitializeComponent();
             this.item = item;
             this.list = list;
+            this.user = user;
             originalItem = item.originalItem;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
 
-            // TODO hide the important buttons if not administrator
+            // hide the important buttons if not administrator
+            if (user.employee_type.Equals("S") is false) {
+
+                featureBtn.Visibility = Visibility.Collapsed;
+                offerBtn.Visibility = Visibility.Collapsed;
+                closeBtn.Visibility = Visibility.Collapsed;
+            }
 
             // Add the ID number to the label at the top
             listingIDLabel.Content += item.id.ToString();

@@ -48,6 +48,7 @@ namespace RealEstateApp.EntityModels
         public string security_answer { get; set; }
 
         public bool first_login { get; set; }
+        public bool? fired { get; set; }
 
         public virtual Administrator Administrator { get; set; }
 
