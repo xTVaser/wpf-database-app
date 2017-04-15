@@ -111,8 +111,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="CommissionItem.cs" />
-    <Compile Include="EmployeeItem.cs" />
+    <Compile Include="Models\CommissionItem.cs" />
+    <Compile Include="Models\EmployeeItem.cs" />
     <Compile Include="EntityModels\Administrator.cs" />
     <Compile Include="EntityModels\Agent.cs" />
     <Compile Include="EntityModels\Client.cs" />
@@ -124,8 +124,8 @@
     <Compile Include="EntityModels\Offer.cs" />
     <Compile Include="EntityModels\Office.cs" />
     <Compile Include="EntityModels\StreetAddress.cs" />
-    <Compile Include="FeatureItem.cs" />
-    <Compile Include="OfferItem.cs" />
+    <Compile Include="Models\FeatureItem.cs" />
+    <Compile Include="Models\OfferItem.cs" />
     <Compile Include="Windows\AddClient.xaml.cs">
       <DependentUpon>AddClient.xaml</DependentUpon>
     </Compile>
@@ -142,11 +142,11 @@
     <Compile Include="Windows\ClientInfo.xaml.cs">
       <DependentUpon>ClientInfo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ClientItem.cs" />
+    <Compile Include="Models\ClientItem.cs" />
     <Compile Include="Windows\Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
     </Compile>
-    <Compile Include="HelperFunctions.cs" />
+    <Compile Include="Lib\HelperFunctions.cs" />
     <Compile Include="Windows\ForgotPassword.xaml.cs">
       <DependentUpon>ForgotPassword.xaml</DependentUpon>
     </Compile>
@@ -171,7 +171,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ListingItem.cs" />
+    <Compile Include="Models\ListingItem.cs" />
     <Compile Include="Windows\NewEmployee.xaml.cs">
       <DependentUpon>NewEmployee.xaml</DependentUpon>
     </Compile>
@@ -181,7 +181,7 @@
     <Compile Include="Windows\OfficeInfo.xaml.cs">
       <DependentUpon>OfficeInfo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="OfficeItem.cs" />
+    <Compile Include="Models\OfficeItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
