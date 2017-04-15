@@ -5,18 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RealEstateApp"
         mc:Ignorable="d"
-        Title="Client Info" Height="450" Width="300" Loaded="Window_Loaded">
+        Title="Client Info" Height="500" Width="300" Loaded="Window_Loaded">
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
+            <RowDefinition Height="0.75*"/>
             <RowDefinition Height="1*"/>
+            <RowDefinition Height="0.75*"/>
             <RowDefinition Height="1*"/>
+            <RowDefinition Height="0.75*"/>
             <RowDefinition Height="1*"/>
+            <RowDefinition Height="0.75*"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="0.75*"/>
             <RowDefinition Height="4*"/>
         </Grid.RowDefinitions>
 

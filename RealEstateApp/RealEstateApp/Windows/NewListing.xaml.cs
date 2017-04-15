@@ -30,10 +30,12 @@ namespace RealEstateApp {
         private List<int> clientIDs = new List<int>();
         private string imageFilePath = null;
         private byte[] selectedImageData = null;
+        private ListView list;
 
-        public NewListing() {
+        public NewListing(ListView list) {
 
             InitializeComponent();
+            this.list = list;
         }
 
         /// <summary>
@@ -145,7 +147,7 @@ namespace RealEstateApp {
             if (streetNum < 0) {
                 MessageBox.Show("Street Address cannot be below 0", "Incorrect Fields");
                 // Get rid of the client if existing
-                removeClient(sellerID);
+                RemoveClient(sellerID);
                 return;
             }
 
@@ -160,7 +162,7 @@ namespace RealEstateApp {
 
                 MessageBox.Show("Address related fields have resulted in an error", "Incorrect Fields");
                 // Get rid of the client if existing
-                removeClient(sellerID);
+                RemoveClient(sellerID);
                 return;
             }
 
@@ -209,19 +211,19 @@ namespace RealEstateApp {
                 if (squareFootageField.Text.Equals("") is false && squareFootage < 0) {
                     MessageBox.Show("House information fields are incorrect", "Incorrect Fields");
                     // Get rid of the client if existing
-                    removeClient(sellerID);
+                    RemoveClient(sellerID);
                     return;
                 }
                 if (lotSizeField.Text.Equals("") is false && lotSize < 0) {
                     MessageBox.Show("House information fields are incorrect", "Incorrect Fields");
                     // Get rid of the client if existing
-                    removeClient(sellerID);
+                    RemoveClient(sellerID);
                     return;
                 }
 
                 MessageBox.Show("House information fields are incorrect", "Incorrect Fields");
                 // Get rid of the client if existing
-                removeClient(sellerID);
+                RemoveClient(sellerID);
                 return;
             }
 
@@ -235,7 +237,7 @@ namespace RealEstateApp {
             if(Decimal.TryParse(askingPriceField.Text, out askingPrice) is false || askingPrice < 0) {
                 MessageBox.Show("Asking price was entered incorrectly", "Incorrect Fields");
                 // Get rid of the client if existing
-                removeClient(sellerID);
+                RemoveClient(sellerID);
                 return;
             }
 
@@ -289,17 +291,31 @@ namespace RealEstateApp {
                     MessageBox.Show("Could not create listing", "Incorrect Fields");
 
                     // Get rid of the client if existing
-                    removeClient(sellerID);
-
+                    RemoveClient(sellerID);
                     return;
                 }
 
-                // TODO should update the list immediately
+                // Get the record we just added
+                var result = context.Listings.SqlQuery("SELECT * FROM Listing WHERE ID = IDENT_CURRENT('listing')").FirstOrDefault<Listing>();
+
+                // Construct the list item
+                ListingItem newItem = new ListingItem(yearBuilt, dateListed);
+                newItem.id = result.id;
+                newItem.Address = HelperFunctions.AddressToString(result.StreetAddress);
+                newItem.Bedrooms = result.num_bedrooms;
+                newItem.Bathrooms = result.num_bathrooms;
+                newItem.Stories = result.num_stories;
+                newItem.AskingPriceDecimal = result.asking_price;
+                newItem.originalItem = result;
+
+                // Add it to the listview
+                list.Items.Add(newItem);
+            
                 Close();
             }
         }
 
-        private void removeClient(int sellerID) {
+        private void RemoveClient(int sellerID) {
 
             using (var context = new Model()) {
                 // Get rid of the client if existing

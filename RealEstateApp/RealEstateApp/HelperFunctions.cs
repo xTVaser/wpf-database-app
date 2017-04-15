@@ -78,6 +78,7 @@ namespace RealEstateApp {
             return matches.Success;
         }
 
+        // TODO need to set agent information, not currently doing so
         public static Int32 AddNewClient(string fname, string lname, string clientType, string phoneNumber, string email) {
 
             // If any of the fields are empty, then stop

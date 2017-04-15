@@ -23,8 +23,12 @@ namespace RealEstateApp {
     /// </summary>
     public partial class AddClient : Window {
 
-        public AddClient() {
+        ListView list;
+
+        public AddClient(ListView list) {
+
             InitializeComponent();
+            this.list = list;
         }
 
         private void AddNewClient(object sender, RoutedEventArgs e) {
@@ -37,8 +41,22 @@ namespace RealEstateApp {
 
             Int32 result = HelperFunctions.AddNewClient(firstName, lastName, clientType, phoneNumber, email);
 
-            if (result != -1)
+            if (result != -1) {
+
+                string typeCode = "B";
+                if (clientType.Equals("Seller"))
+                    typeCode = "S";
+
+                ClientItem newItem = new ClientItem(typeCode);
+                newItem.FirstName = firstName;
+                newItem.LastName = lastName;
+                newItem.Email = email;
+                newItem.PhoneNumber = phoneNumber;
+                
+                list.Items.Add(newItem);
+
                 Close();
+            }
         }
     }
 }

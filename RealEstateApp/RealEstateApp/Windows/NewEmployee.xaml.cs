@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 
 using RealEstateApp.EntityModels;
 using System.Data.SqlClient;
+using System.ComponentModel;
 
 // TODO Update list when completed, extract that logic into a method
 
@@ -26,13 +27,15 @@ namespace RealEstateApp {
 
         bool isNewEmployee = true;
         EmployeeItem item;
+        ListView list;
 
-        public NewEmployee(EmployeeItem item, bool isNewEmployee) {
+        public NewEmployee(EmployeeItem item, bool isNewEmployee, ListView list) {
 
             InitializeComponent();
 
             this.item = item;
             this.isNewEmployee = isNewEmployee; // true = making a new employee, not editing
+            this.list = list;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
@@ -56,6 +59,7 @@ namespace RealEstateApp {
 
                 if (item.Type.Equals("S")) {
                     salaryField.Text = item.Salary.ToString();
+                    adminBox.IsChecked = true;
 
                     // Disable agent fields
                     phoneNumberField.IsEnabled = false;
@@ -63,6 +67,7 @@ namespace RealEstateApp {
                     brokerShareField.IsEnabled = false;
                 }
                 else {
+                    agentBox.IsChecked = true;
                     phoneNumberField.Text = item.PhoneNumber; // maybe need to pass to helper function
                     commissionField.Text = item.Commission.ToString();
                     if (item.BrokerShare != null)
@@ -153,7 +158,6 @@ namespace RealEstateApp {
                     MessageBox.Show("Username already defined for that office", "Incorrect Fields");
                     return;
                 }
-
             }
 
             // The only database error that can happen at this point is a duplicate username/officeid
@@ -175,14 +179,34 @@ namespace RealEstateApp {
                     SqlParameter salaryParam = new SqlParameter("salary", salary);
                     Object[] parameters = { usernameParam, officeIdParam, salaryParam };
 
-                    if (isNewEmployee) {
-                        context.Database.ExecuteSqlCommand("INSERT INTO Administrator VALUES (@username, @oid, @salary)", parameters);
+                    try {
+                        if (isNewEmployee)
+                            context.Database.ExecuteSqlCommand("INSERT INTO Administrator VALUES (@username, @oid, @salary)", parameters);
+                        else
+                            context.Database.ExecuteSqlCommand("UPDATE Administrator SET salary = @salary WHERE employee_username = @username AND employee_office_id = @oid", parameters);
                     }
-                    else {
-                        context.Database.ExecuteSqlCommand("UPDATE Administrator SET salary = @salary WHERE employee_username = @username AND employee_office_id = @oid", parameters);
+                    catch (Exception ex) {
+
+                        context.Database.ExecuteSqlCommand("DELETE FROM Employee WHERE username = @username AND office_id = @id",
+                            new SqlParameter("username", username),
+                            new SqlParameter("id", item.OfficeID));
+                        return;
                     }
 
-                    Close();
+                    // Make new item so we can either add it to the list or update it
+                    EmployeeItem newItem = new EmployeeItem("S");
+                    newItem.FirstName = firstName;
+                    newItem.LastName = lastName;
+                    newItem.Email = email;
+                    newItem.Username = username;
+                    newItem.OfficeID = item.OfficeID;
+                    newItem.securityQuestion = securityQuestion;
+                    newItem.securityAnswer = securityAnswer;
+                    newItem.Salary = salary;
+
+                    UpdateItem(newItem);
+
+                    submitBtn.IsEnabled = false;
                 }
             }
 
@@ -202,24 +226,69 @@ namespace RealEstateApp {
 
                     SqlParameter usernameParam = new SqlParameter("username", username);
                     SqlParameter officeIdParam = new SqlParameter("oid", item.OfficeID);
-                    SqlParameter phoneParam = new SqlParameter("phone", HelperFunctions.PhoneNumberToString(phoneNumber));
-                    SqlParameter balanceParam = new SqlParameter("bal", 0);
+                    SqlParameter phoneParam = new SqlParameter("phone", phoneNumber);
+                    SqlParameter balanceParam = new SqlParameter("bal", new Decimal(0));
                     SqlParameter commissionParam = new SqlParameter("commission", commission);
                     SqlParameter shareParam = new SqlParameter("share", brokerShare);
                     Object[] parameters = { usernameParam, officeIdParam, phoneParam, balanceParam, commissionParam, shareParam };
 
-                    if (isNewEmployee) {
-                        context.Database.ExecuteSqlCommand("INSERT INTO Agent VALUES (@username, @oid, @phone, @bal, @comission, @share)", parameters);
+                    try {
+                        if (isNewEmployee) 
+                            context.Database.ExecuteSqlCommand("INSERT INTO Agent VALUES (@username, @oid, @phone, @bal, @commission, @share)", parameters);
+                        else 
+                            context.Database.ExecuteSqlCommand("UPDATE Agent SET phone_number = @phone, commission_percentage = @commission, broker_share = @share " +
+                                                                "WHERE employee_username = @username AND employee_office_id = @oid", parameters);
                     }
-                    else {
-                        context.Database.ExecuteSqlCommand("UPDATE Agent SET phone_number = @phone, commission_percentage = @commission, broker_share = @share" +
-                                                            "WHERE employee_username = @username AND employee_office_id = @oid", parameters);
+                    catch (Exception ex) {
+
+                        context.Database.ExecuteSqlCommand("DELETE FROM Employee WHERE username = @username AND office_id = @id",
+                            new SqlParameter("username", username),
+                            new SqlParameter("id", item.OfficeID));
+                        return;
                     }
-                    Close();
+
+                    // Make new item so we can either add it to the list or update it
+                    EmployeeItem newItem = new EmployeeItem("A");
+                    newItem.FirstName = firstName;
+                    newItem.LastName = lastName;
+                    newItem.Email = email;
+                    newItem.Username = username;
+                    newItem.OfficeID = item.OfficeID;
+                    newItem.securityQuestion = securityQuestion;
+                    newItem.securityAnswer = securityAnswer;
+                    newItem.PhoneNumber = HelperFunctions.PhoneNumberToString(phoneNumber);
+                    newItem.Commission = commission;
+                    newItem.BrokerShare = brokerShare;
+
+                    UpdateItem(newItem);
+
+                    submitBtn.IsEnabled = false;
                 }
             }
+        }
 
+        private void UpdateItem(EmployeeItem newItem) {
+
+            // If it is a new item then we just add it to the list
+            if (isNewEmployee) {
+                list.Items.Add(newItem);
+                return;
+            }
+
+            // Otherwise, we need to edit the fields
+            item.FirstName = newItem.FirstName;
+            item.LastName = newItem.LastName;
+            item.Email = newItem.Email;
+            item.securityQuestion = newItem.securityQuestion;
+            item.securityAnswer = newItem.securityAnswer;
+            item.Salary = newItem.Salary;
+            item.PhoneNumber = newItem.PhoneNumber;
+            item.Commission = newItem.Commission;
+            item.BrokerShare = newItem.BrokerShare;
             
+            // Refresh the listview
+            ICollectionView view = CollectionViewSource.GetDefaultView(list.Items);
+            view.Refresh();
         }
 
         private void adminBox_Checked(object sender, RoutedEventArgs e) {

@@ -145,6 +145,11 @@ namespace RealEstateApp {
                             new SqlParameter("reason", "Commission for Closing of Listing: " + item.Address),
                             new SqlParameter("date", DateTime.Now));
 
+                        // Deposit commission into balance // TODO make sure this auto updates as well
+                        context.Database.ExecuteSqlCommand("UPDATE Agent SET commission_balance = @amount WHERE id = @id",
+                            new SqlParameter("amount", agentAmount + agent.commission_balance),
+                            new SqlParameter("id", agent.id));
+
                         // Get the broker's information
                         var broker = context.Agents.SqlQuery("SELECT * FROM Agent WHERE employee_username = @brokername AND employee_office_id = @id",
                             new SqlParameter("brokername", agent.Employee.Office.broker_username),
@@ -158,6 +163,11 @@ namespace RealEstateApp {
                                 new SqlParameter("amount", brokerAmount),
                                 new SqlParameter("reason", "Commission for Closing of Listing: " + item.Address),
                                 new SqlParameter("date", DateTime.Now));
+
+                            // Deposit commission into balance // TODO make sure this auto updates as well
+                            context.Database.ExecuteSqlCommand("UPDATE Agent SET commission_balance = @amount WHERE id = @id",
+                                new SqlParameter("amount", brokerAmount + broker.commission_balance),
+                                new SqlParameter("id", broker.id));
                         }
                     }
                 }

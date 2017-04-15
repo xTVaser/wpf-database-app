@@ -89,22 +89,6 @@ namespace RealEstateApp {
             accessStatus.Content += accountType;
         }
 
-        //Button Methods
-
-        private void newListingBtn_Click(object sender, RoutedEventArgs e) {
-
-            // Open new listing window
-            NewListing newListingWindow = new NewListing();
-            newListingWindow.Show();
-        }
-
-        private void newClientBtn_Click(object sender, RoutedEventArgs e) {
-
-            // Open client window
-            AddClient addClientWindow = new AddClient();
-            addClientWindow.Show();
-        }
-
         /// <summary>
         /// Populates the listing tab with ListingItems
         /// </summary>
@@ -131,6 +115,13 @@ namespace RealEstateApp {
                     list.Items.Add(newItem);
                 }
             }
+        }
+
+        private void newListingBtn_Click(object sender, RoutedEventArgs e) {
+
+            // Open new listing window
+            NewListing newListingWindow = new NewListing(listingGridView);
+            newListingWindow.Show();
         }
 
         /// <summary>
@@ -210,6 +201,13 @@ namespace RealEstateApp {
             }
         }
 
+        private void newClientBtn_Click(object sender, RoutedEventArgs e) {
+
+            // Open client window
+            AddClient addClientWindow = new AddClient(clientGridView);
+            addClientWindow.Show();
+        }
+
         private void clientGridView_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
 
             var item = ((FrameworkElement)e.OriginalSource).DataContext as ClientItem;
@@ -260,7 +258,7 @@ namespace RealEstateApp {
         private void menuItem_editEmployee_Click(object sender, RoutedEventArgs e) {
 
             var item = ((FrameworkElement)e.OriginalSource).DataContext as EmployeeItem;
-            NewEmployee newWindow = new NewEmployee(item, false); // false = we are editing an employee, not creating a new one
+            NewEmployee newWindow = new NewEmployee(item, false, employeeGridView); // false = we are editing an employee, not creating a new one
             newWindow.Show();
         }
 
@@ -291,7 +289,7 @@ namespace RealEstateApp {
             newItem.Username = user.username;
             newItem.OfficeID = user.office_id;
 
-            NewEmployee newWindow = new NewEmployee(newItem, true);
+            NewEmployee newWindow = new NewEmployee(newItem, true, employeeGridView);
             newWindow.Show();
         }
     }
