@@ -63,6 +63,14 @@ namespace RealEstateApp {
             // Else, agent
             else {
 
+                // Get agent object
+                using (var context = new Model()) {
+
+                    agent = context.Agents.SqlQuery("SELECT * FROM Agent WHERE employee_username = @username AND employee_office_id = @oid",
+                        new SqlParameter("username", user.username),
+                        new SqlParameter("oid", user.office_id)).FirstOrDefault<Agent>();
+                }
+
                 // If not the broker, dont need to manage employees
                 if (isBroker is false) {
                     employeeTab.Visibility = Visibility.Collapsed;
@@ -73,15 +81,7 @@ namespace RealEstateApp {
 
                 // Both agent types can make listings and view their balances
                 newListingBtn.Visibility = Visibility.Collapsed;
-                // TODO FillTab(balanceTab); 
-
-                // Get agent object
-                using (var context = new Model()) {
-
-                    agent = context.Agents.SqlQuery("SELECT * FROM Agent WHERE employee_username = @username AND employee_office_id = @oid",
-                        new SqlParameter("username", user.username),
-                        new SqlParameter("oid", user.office_id)).FirstOrDefault<Agent>();
-                }
+                FillBalanceTab();
             }
             
             // Everyone can see these tabs and content within
@@ -251,6 +251,33 @@ namespace RealEstateApp {
                     }
 
                     list.Items.Add(newItem);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Populates balance tab with current balance, commission and broker share stats, and a history of all commissions paid in
+        /// </summary>
+        private void FillBalanceTab() {
+
+            // Set the simple label fields
+            currentBalanceField.Content += agent.commission_balance.ToString("#.00");
+            commissionShareField.Content += agent.commission_percentage + "%";
+            brokerShareField.Content += agent.broker_share + "%";
+
+            // Populate the commissions
+            using (var context = new Model()) {
+
+                var commissions = context.Commissions.SqlQuery("SELECT * FROM Commission WHERE payable_to = @id", new SqlParameter("id", agent.id)).ToList<Commission>();
+
+                foreach (Commission c in commissions) {
+
+                    CommissionItem newItem = new CommissionItem();
+                    newItem.Amount = c.amount;
+                    newItem.Reason = c.reason;
+                    newItem.Date = c.date_payed_out;
+
+                    commissionGridView.Items.Add(newItem);
                 }
             }
         }

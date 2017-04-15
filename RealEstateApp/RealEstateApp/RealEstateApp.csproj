@@ -111,6 +111,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="CommissionItem.cs" />
     <Compile Include="EmployeeItem.cs" />
     <Compile Include="EntityModels\Administrator.cs" />
     <Compile Include="EntityModels\Agent.cs" />

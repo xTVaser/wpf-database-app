@@ -70,11 +70,28 @@
                 </ListView>
             </TabItem>
             <TabItem Header="Balance" Name="balanceTab"> <!-- Only for agents or brokers -->
-                <ListView>
-                    <ListViewItem>
-                        <Label Content="Information"/>
-                    </ListViewItem>
-                </ListView>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="5*"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0" Name="currentBalanceField" FontWeight="Bold" Content="Balance: $"/>
+                    <Label Grid.Row="1" Name="commissionShareField" FontWeight="Bold" Content="Commission Share: "/>
+                    <Label Grid.Row="2" Name="brokerShareField" FontWeight="Bold" Content="Broker Share: "/>
+
+                    <ListView Grid.Row="3" Name="commissionGridView">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Amount" DisplayMemberBinding="{Binding Path=Amount, StringFormat=N2}"/>
+                                <GridViewColumn Header="Reason" DisplayMemberBinding="{Binding Path=Reason}"/>
+                                <GridViewColumn Header="Date Recevied" DisplayMemberBinding="{Binding Path=Date}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Grid>
             </TabItem>
             <TabItem Header="Employees" Name="employeeTab"> <!-- Only for brokers -->
                 <ListView Name="employeeGridView">

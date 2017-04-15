@@ -38,6 +38,8 @@ namespace RealEstateApp {
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
 
+            // TODO hide the important buttons if not administrator
+
             // Add the ID number to the label at the top
             listingIDLabel.Content += item.id.ToString();
 
