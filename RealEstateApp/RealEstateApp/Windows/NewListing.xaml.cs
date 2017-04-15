@@ -156,7 +156,7 @@ namespace RealEstateApp {
             string postalcode = postalCodeField.Text.ToString();
 
             // Check fields to make sure they arent null
-            if (HelperFunctions.NullOrEmpty(streetName, city)  || streetTypeBox.SelectedIndex == 0 || provinceBox.SelectedIndex == 0
+            if (HelperFunctions.NullOrEmpty(streetName, city)  || streetTypeBox.SelectedIndex == -1 || provinceBox.SelectedIndex == -1
                 || HelperFunctions.CheckPostalCode(postalcode) is false 
                 || parseResult is false) {
 
@@ -321,9 +321,11 @@ namespace RealEstateApp {
                 // Get rid of the client if existing
                 if (clientSelected is false)
                     context.Database.ExecuteSqlCommand("DELETE FROM Client WHERE id = @id", new SqlParameter("id", sellerID));
+
                 // If existing client
-                else {
+                else if (clientTypeChanged is true) {
                     context.Database.ExecuteSqlCommand("UPDATE Client SET client_type = 'B' WHERE id = @id", new SqlParameter("id", sellerID));
+                    clientTypeChanged = false;
                 }
             }
         }

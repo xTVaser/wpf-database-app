@@ -78,7 +78,7 @@ namespace RealEstateApp {
 
                 // First check to see if there are any offers for this listing by the same client
                 var checkQuery = context.Offers.SqlQuery("SELECT * FROM Offer WHERE client_id = @cid AND listing_id = @lid",
-                    new SqlParameter("cid", clientIDs.ElementAt(clientBox.SelectedIndex)), new SqlParameter("lid", listingId)).ToList<Offer>();
+                    new SqlParameter("cid", clientIDs.ElementAt(clientBox.SelectedIndex-1)), new SqlParameter("lid", listingId)).ToList<Offer>();
 
                 // If there is a result, than we will update the field instead of inserting
                 if (checkQuery.Count > 0) {

@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using RealEstateApp.EntityModels;
 using System.Data.SqlClient;
 using System.IO;
+using System.ComponentModel;
 
 namespace RealEstateApp {
 
@@ -25,11 +26,13 @@ namespace RealEstateApp {
 
         private ListingItem item;
         private Listing originalItem;
+        private ListView list;
 
-        public ListingInfo(ListingItem item) {
+        public ListingInfo(ListingItem item, ListView list) {
 
             InitializeComponent();
             this.item = item;
+            this.list = list;
             originalItem = item.originalItem;
         }
 
@@ -172,11 +175,31 @@ namespace RealEstateApp {
                     }
                 }
 
-                // TODO this
                 // Next we need to start deleting everything
-                // First manually delete seller if the seller does not have any other houses for sale or purchasing
                 // Cascading deletion for Offers / Address / Features > Listing itself
-                // update client type if needed and if not deleted
+                context.Database.ExecuteSqlCommand("DELETE FROM Listing WHERE id = @id", new SqlParameter("id", item.id));
+
+                // First manually delete seller if the seller does not have any other houses for sale or purchasing
+                var seller = context.Clients.SqlQuery("SELECT * FROM Client WHERE id = @id", new SqlParameter("id", originalItem.seller_id)).FirstOrDefault<Client>();
+
+                // If the seller has no more listings and no offers
+                if (seller.Listings.Count == 0 && seller.Offers.Count == 0) {
+
+                    // Delete the seller
+                    context.Database.ExecuteSqlCommand("DELETE FROM Client WHERE id = @id", new SqlParameter("id", seller.id));
+                }
+                // If the seller still has offers but no listings, update him to a Buyer
+                else if (seller.Offers.Count != 0 && seller.Listings.Count == 0) {
+
+                    context.Database.ExecuteSqlCommand("UPDATE Client SET client_type = 'B' WHERE id = @id", new SqlParameter("id", seller.id));
+                }
+                // Refresh the listview
+                list.Items.Remove(item);
+                ICollectionView view = CollectionViewSource.GetDefaultView(list.Items);
+                view.Refresh();
+
+                // Close the Window
+                Close();
             }
         }
 

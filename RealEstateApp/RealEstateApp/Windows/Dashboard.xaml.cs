@@ -50,8 +50,6 @@ namespace RealEstateApp {
         /// <param name="e"></param>
         private void Window_Loaded(object sender, RoutedEventArgs e) {
 
-            // TODO check agent has the tabs filled that they are supposed to
-
             // Hide tabs that aren't needed for the particular user
             // If Administrator, do not need to see balance or employee tabs.
             if (user.employee_type.Equals("S")) {
@@ -139,7 +137,7 @@ namespace RealEstateApp {
         private void listGridView_MouseDoubleClick(object sender, MouseButtonEventArgs e) {
 
             var item = ((FrameworkElement)e.OriginalSource).DataContext as ListingItem;
-            ListingInfo newWindow = new ListingInfo(item);
+            ListingInfo newWindow = new ListingInfo(item, listingGridView);
             newWindow.Show();
         }
 
