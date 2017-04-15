@@ -44,7 +44,7 @@ namespace RealEstateApp {
 
                     var queryResult = context.Agents.SqlQuery("SELECT * FROM Agent WHERE id = @id", new SqlParameter("id", item.agentId)).FirstOrDefault<Agent>();
 
-                    assignedAgentName.Content = queryResult.Employee.first_name + queryResult.Employee.last_name;
+                    assignedAgentName.Content = queryResult.Employee.first_name + " " + queryResult.Employee.last_name;
                 }
             }
             else

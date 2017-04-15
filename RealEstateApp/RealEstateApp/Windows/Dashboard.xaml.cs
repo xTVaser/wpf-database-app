@@ -51,31 +51,36 @@ namespace RealEstateApp {
         /// <param name="e"></param>
         private void Window_Loaded(object sender, RoutedEventArgs e) {
 
-            // TODO check that every user has the tabs filled that they are supposed to
+            // TODO check agent has the tabs filled that they are supposed to
 
             // Hide tabs that aren't needed for the particular user
             // If Administrator, do not need to see balance or employee tabs.
             if (user.employee_type.Equals("S")) {
                 balanceTab.Visibility = Visibility.Collapsed;
+                employeeTab.Visibility = Visibility.Collapsed;
 
                 newClientBtn.Visibility = Visibility.Collapsed;
-                FillListingTab(listingGridView);
+                newEmployeeBtn.Visibility = Visibility.Collapsed;
             }
+
             // Else, agent
             else {
+
+                // If not the broker, dont need to manage employees
+                if (isBroker is false) {
+                    employeeTab.Visibility = Visibility.Collapsed;
+                    newEmployeeBtn.Visibility = Visibility.Collapsed;
+                }
+                else
+                    FillEmployeeTab(employeeGridView);
+
+                // Both agent types can make listings and view their balances
                 newListingBtn.Visibility = Visibility.Collapsed;
                 //FillTab(balanceTab);
             }
-
-            // If not the broker, dont need to manage employees
-            if (isBroker is false) {
-                employeeTab.Visibility = Visibility.Collapsed;
-                newEmployeeBtn.Visibility = Visibility.Collapsed;
-            }
-            else
-                FillEmployeeTab(employeeGridView);
             
             // Everyone can see these tabs and content within
+            FillListingTab(listingGridView);
             FillOfficeTab(officeGridView);
             FillClientTab(clientGridView);
 
@@ -182,7 +187,7 @@ namespace RealEstateApp {
                 List<Client> queryResult = new List<Client>();
 
                 // If the user is not an administrator then only display their clients
-                if (agentID != null) {
+                if (agentID != -1) {
                     SqlParameter idParam = new SqlParameter("id", agentID);
                     queryResult = context.Clients.SqlQuery("SELECT * FROM Client WHERE assigned_agent = @id", idParam).ToList<Client>();
                 }
@@ -272,6 +277,11 @@ namespace RealEstateApp {
 
         }
 
+        /// <summary>
+        /// When the user clicks on the create new employee window.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void newEmployeeBtn_Click(object sender, RoutedEventArgs e) {
 
             EmployeeItem newItem = new EmployeeItem(user.employee_type);

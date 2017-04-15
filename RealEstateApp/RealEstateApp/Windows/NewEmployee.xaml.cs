@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using RealEstateApp.EntityModels;
 using System.Data.SqlClient;
 
+// TODO Update list when completed, extract that logic into a method
+
 namespace RealEstateApp {
 
     /// <summary>
@@ -144,7 +146,6 @@ namespace RealEstateApp {
                         context.Database.ExecuteSqlCommand("UPDATE Employee SET email = @email, first_name = @fname, last_name = @lname, " +
                                                             "security_question = @question, security_answer = @answer WHERE username = @username AND office_id = @oid", parameters);
                     }
-                    
                 }
                 catch (Exception ex) {
 
@@ -179,8 +180,9 @@ namespace RealEstateApp {
                     }
                     else {
                         context.Database.ExecuteSqlCommand("UPDATE Administrator SET salary = @salary WHERE employee_username = @username AND employee_office_id = @oid", parameters);
-                        Close();
                     }
+
+                    Close();
                 }
             }
 
@@ -212,8 +214,8 @@ namespace RealEstateApp {
                     else {
                         context.Database.ExecuteSqlCommand("UPDATE Agent SET phone_number = @phone, commission_percentage = @commission, broker_share = @share" +
                                                             "WHERE employee_username = @username AND employee_office_id = @oid", parameters);
-                        Close();
                     }
+                    Close();
                 }
             }
 

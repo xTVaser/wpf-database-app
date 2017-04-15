@@ -138,7 +138,6 @@ namespace RealEstateApp {
                         decimal brokerAmount = (decimal)((float)agentAmount * (agent.broker_share / 100));
 
                         // Distribute payments
-                        // TODO if broker, skip second payment which would be a double commission records
                         // Insert the two commissions into the database
                         context.Database.ExecuteSqlCommand("INSERT INTO Commission VALUES (@id, @amount, @reason, @date)",
                             new SqlParameter("id", agent.id),
@@ -151,19 +150,23 @@ namespace RealEstateApp {
                             new SqlParameter("brokername", agent.Employee.Office.broker_username),
                             new SqlParameter("id", agent.employee_office_id)).FirstOrDefault<Agent>();
 
-                        // Get the broker's ID
-                        context.Database.ExecuteSqlCommand("INSERT INTO Commission VALUES (@id, @amount, @reason, @date)",
-                            new SqlParameter("id", broker.id),
-                            new SqlParameter("amount", brokerAmount),
-                            new SqlParameter("reason", "Commission for Closing of Listing: " + item.Address),
-                            new SqlParameter("date", DateTime.Now));
+                        // if broker, skip second payment which would be a double commission records
+                        if (agent.id != broker.id) {
+                            // Get the broker's ID
+                            context.Database.ExecuteSqlCommand("INSERT INTO Commission VALUES (@id, @amount, @reason, @date)",
+                                new SqlParameter("id", broker.id),
+                                new SqlParameter("amount", brokerAmount),
+                                new SqlParameter("reason", "Commission for Closing of Listing: " + item.Address),
+                                new SqlParameter("date", DateTime.Now));
+                        }
                     }
                 }
 
                 // TODO this
                 // Next we need to start deleting everything
-                // First manually delete seller if the seller does not have any other houses
+                // First manually delete seller if the seller does not have any other houses for sale or purchasing
                 // Cascading deletion for Offers / Address / Features > Listing itself
+                // update client type if needed and if not deleted
             }
         }
 

@@ -26,6 +26,7 @@ namespace RealEstateApp {
     public partial class NewListing : Window {
 
         private bool clientSelected = false;
+        private bool clientTypeChanged = false;
         private List<int> clientIDs = new List<int>();
         private string imageFilePath = null;
         private byte[] selectedImageData = null;
@@ -114,15 +115,27 @@ namespace RealEstateApp {
                 //need the ID of the last inserted row
                 sellerID = HelperFunctions.AddNewClient(fname, lname, "Seller", phone, email);
 
-                if (sellerID == -1)
+                if (sellerID == -1) {
+                    MessageBox.Show("Unable to create client", "Incorrect Fields");
                     return;
+                }
             }
             // otherwise, we have to just find the client's ID
-            else 
-                sellerID = clientIDs.ElementAt(existingClientList.SelectedIndex-1);
+            else {
 
-            // TODO: check if clients dont all get changed to sellers, suspicious
-            // TODO: also, make the existing client a seller/buyer if they are currently just a buyer.
+                sellerID = clientIDs.ElementAt(existingClientList.SelectedIndex - 1);
+
+                // If the client is only a buyer atm, upgrade to Both
+                using (var context = new Model()) {
+
+                    var seller = context.Clients.SqlQuery("SELECT * FROM Client WHERE id = @id", new SqlParameter("id", sellerID)).FirstOrDefault<Client>();
+
+                    if (seller.client_type.Equals("B")) {
+                        context.Database.ExecuteSqlCommand("UPDATE Client SET client_type = 'E' WHERE id = @id", new SqlParameter("id", sellerID));
+                        clientTypeChanged = true;
+                    }
+                }
+            }
 
 
             // Next we have to make a new address
@@ -131,27 +144,32 @@ namespace RealEstateApp {
 
             if (streetNum < 0) {
                 MessageBox.Show("Street Address cannot be below 0", "Incorrect Fields");
+                // Get rid of the client if existing
+                removeClient(sellerID);
                 return;
             }
 
             string streetName = streetNameField.Text;
-            string streetType = ((ComboBoxItem)streetTypeBox.SelectedItem).Content.ToString();
             string city = cityField.Text;
-            string province = ((ComboBoxItem)provinceBox.SelectedItem).Content.ToString();
             string postalcode = postalCodeField.Text.ToString();
 
             // Check fields to make sure they arent null
-            if (HelperFunctions.NullOrEmpty(streetName, streetType, province, city) 
+            if (HelperFunctions.NullOrEmpty(streetName, city)  || streetTypeBox.SelectedIndex == 0 || provinceBox.SelectedIndex == 0
                 || HelperFunctions.CheckPostalCode(postalcode) is false 
                 || parseResult is false) {
 
                 MessageBox.Show("Address related fields have resulted in an error", "Incorrect Fields");
+                // Get rid of the client if existing
+                removeClient(sellerID);
                 return;
             }
 
+            string streetType = ((ComboBoxItem)streetTypeBox.SelectedItem).Content.ToString();
+            string province = ((ComboBoxItem)provinceBox.SelectedItem).Content.ToString();
+
             // If not, we can make a new address and store it's ID as well.
             SqlParameter streetNumParam = new SqlParameter("num", streetNum);
-            SqlParameter streetNameParam = new SqlParameter("name", streetNum);
+            SqlParameter streetNameParam = new SqlParameter("name", streetName);
             SqlParameter streetTypeParam = new SqlParameter("type", streetType);
             SqlParameter cityParam = new SqlParameter("city", city);
             SqlParameter provinceParam = new SqlParameter("province", province);
@@ -190,14 +208,20 @@ namespace RealEstateApp {
                 
                 if (squareFootageField.Text.Equals("") is false && squareFootage < 0) {
                     MessageBox.Show("House information fields are incorrect", "Incorrect Fields");
+                    // Get rid of the client if existing
+                    removeClient(sellerID);
                     return;
                 }
                 if (lotSizeField.Text.Equals("") is false && lotSize < 0) {
                     MessageBox.Show("House information fields are incorrect", "Incorrect Fields");
+                    // Get rid of the client if existing
+                    removeClient(sellerID);
                     return;
                 }
 
                 MessageBox.Show("House information fields are incorrect", "Incorrect Fields");
+                // Get rid of the client if existing
+                removeClient(sellerID);
                 return;
             }
 
@@ -210,9 +234,10 @@ namespace RealEstateApp {
             Decimal askingPrice = -1;
             if(Decimal.TryParse(askingPriceField.Text, out askingPrice) is false || askingPrice < 0) {
                 MessageBox.Show("Asking price was entered incorrectly", "Incorrect Fields");
+                // Get rid of the client if existing
+                removeClient(sellerID);
                 return;
             }
-            // TODO dates are not validated
 
             DateTime dateListed = DateTime.Today;
             
@@ -228,9 +253,12 @@ namespace RealEstateApp {
                 SqlParameter hasGarageParam = new SqlParameter("garage", hasGarage);
                 SqlParameter yearBuiltParam = new SqlParameter("yearbuilt", SqlDbType.DateTime); //optional
                 yearBuiltParam.Value = yearBuilt;
-                SqlParameter sqFootageParam = new SqlParameter("sqfootage", squareFootage); //optional
-                SqlParameter lotSizeParam = new SqlParameter("lotsize", lotSize); //optional
-                SqlParameter pictureParam = new SqlParameter("picture", selectedImageData); //optional
+                SqlParameter sqFootageParam = new SqlParameter("sqfootage", SqlDbType.Real); //optional
+                sqFootageParam.Value = squareFootage;
+                SqlParameter lotSizeParam = new SqlParameter("lotsize", SqlDbType.Real); //optional
+                lotSizeParam.Value = lotSize;
+                SqlParameter pictureParam = new SqlParameter("picture", SqlDbType.Image); //optional
+                pictureParam.Value = selectedImageData; 
                 SqlParameter timestamp = new SqlParameter("timestamp", SqlDbType.DateTime);
                 timestamp.Value = dateListed;
 
@@ -251,13 +279,36 @@ namespace RealEstateApp {
                 parameters = new object[] { addressFK, sellerFK, askingPriceParam, numBedParam, numBathParam, numStoriesParam,
                     hasGarageParam, yearBuiltParam, sqFootageParam, lotSizeParam, pictureParam, timestamp };
 
-                context.Database.ExecuteSqlCommand("INSERT INTO Listing (address_id, seller_id, asking_price, num_bedrooms, num_bathrooms, " +
-                                                   "num_stories, has_garage, year_built, square_footage, lot_size, display_picture, date_listed)" +
-                                                   "VALUES (@addrFK, @sellerFK, @askingprice, @bed, @bath," +
-                                                   "@stories, @garage, @yearbuilt, @sqfootage, @lotsize, @picture, @timestamp)", parameters);
+                try {
+                    context.Database.ExecuteSqlCommand("INSERT INTO Listing (address_id, seller_id, asking_price, num_bedrooms, num_bathrooms, " +
+                                                       "num_stories, has_garage, year_built, square_footage, lot_size, display_picture, date_listed)" +
+                                                       "VALUES (@addrFK, @sellerFK, @askingprice, @bed, @bath," +
+                                                       "@stories, @garage, @yearbuilt, @sqfootage, @lotsize, @picture, @timestamp)", parameters);
+                }
+                catch (Exception ex) {
+                    MessageBox.Show("Could not create listing", "Incorrect Fields");
+
+                    // Get rid of the client if existing
+                    removeClient(sellerID);
+
+                    return;
+                }
 
                 // TODO should update the list immediately
                 Close();
+            }
+        }
+
+        private void removeClient(int sellerID) {
+
+            using (var context = new Model()) {
+                // Get rid of the client if existing
+                if (clientSelected is false)
+                    context.Database.ExecuteSqlCommand("DELETE FROM Client WHERE id = @id", new SqlParameter("id", sellerID));
+                // If existing client
+                else {
+                    context.Database.ExecuteSqlCommand("UPDATE Client SET client_type = 'B' WHERE id = @id", new SqlParameter("id", sellerID));
+                }
             }
         }
 
