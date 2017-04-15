@@ -9,52 +9,37 @@
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
+            <RowDefinition Height="0.75*"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="0.5*"/>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="0.75*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="0.75*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="0.75*"/>
+            <RowDefinition Height="4*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel
-            MinWidth="150"
-            Grid.Row="0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center">
-
-            <Label Content="Office Address" FontWeight="Bold"/>
-            <Label Name="officeAddress"/>
-        </StackPanel>
-
-        <StackPanel
-            MinWidth="150"
-            Grid.Row="1"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center">
-
-            <Label Content="Office Contact Info" FontWeight="Bold"/>
-            <Label Name="officePhoneNumber"/>
-            <Label Name="officeFaxNumber"/>
-            <Label Name="officeEmail"/>
-        </StackPanel>
-
-        <StackPanel
-            MinWidth="150"
-            Grid.Row="2"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center">
-
-            <Label Content="Broker Contact Info" FontWeight="Bold"/>
-            <Label Name="brokerName"/>
-            <Label Name="brokerEmail"/>
-        </StackPanel>
-
+        <Label Grid.Row="0" Content="Office Address" FontWeight="Bold"/>
+        <Label Grid.Row="2" Content="Office Contact Info" FontWeight="Bold"/>
+        <Label Grid.Row="6" Content="Broker Contact Info" FontWeight="Bold"/>
         <Label 
             Content="Office Employee Listing" 
             FontWeight="Bold"
-            Grid.Row="3"/>
+            Grid.Row="9"/>
+        
+        <Label Grid.Row="1" Name="officeAddress"/>
+        
+        <Label Grid.Row="3" Name="officePhoneNumber"/>
+        <Label Grid.Row="4" Name="officeFaxNumber"/>
+        <Label Grid.Row="5" Name="officeEmail"/>
+        
+        <Label Grid.Row="7" Name="brokerName"/>
+        <Label Grid.Row="8" Name="brokerEmail"/>
 
-        <ListView Name="employeeListView" Grid.Row="4">
+        <ListView Name="employeeListView" Grid.Row="10">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="First Name" DisplayMemberBinding="{Binding Path=FirstName}"/>

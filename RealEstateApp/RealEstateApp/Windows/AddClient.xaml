@@ -15,64 +15,31 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel
-            MinWidth="150"
-            Grid.Row="0"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center">
-
-            <Label Content="First Name"/>
-            <TextBox Name="firstNameField"/>
-        </StackPanel>
-
-        <StackPanel
-            MinWidth="150"
-            Grid.Row="1"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center">
-
-            <Label Content="Last Name"/>
-            <TextBox Name="lastNameField"/>
-        </StackPanel>
-
-        <StackPanel
-            MinWidth="150"
-            Grid.Row="2"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center">
-
-            <Label Content="Client Type"/>
-            <ComboBox Name="clientTypeField">
-                <ComboBoxItem Content="Buyer"/>
-                <ComboBoxItem Content="Seller"/>
-            </ComboBox>
-        </StackPanel>
-
-        <StackPanel
-            MinWidth="150"
-            Grid.Row="3"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center">
-
-            <Label Content="Phone Number"/>
-            <TextBox Name="phoneNumberField"/>
-        </StackPanel>
-
-        <StackPanel
-            MinWidth="150"
-            Grid.Row="4"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center">
-
-            <Label Content="Email"/>
-            <TextBox Name="emailField"/>
-        </StackPanel>
+        <Label Grid.Row="0" Content="First Name"/>
+        <Label Grid.Row="2" Content="Last Name"/>
+        <Label Grid.Row="4" Content="Client Type"/>
+        <Label Grid.Row="6" Content="Phone Number"/>
+        <Label Grid.Row="8" Content="Email"/>
+        
+        <TextBox Grid.Row="1" Name="firstNameField"/>
+        <TextBox Grid.Row="3" Name="lastNameField"/>
+        <ComboBox Grid.Row="5" Name="clientTypeField">
+            <ComboBoxItem Content="Buyer"/>
+            <ComboBoxItem Content="Seller"/>
+        </ComboBox>
+        <TextBox Grid.Row="7" Name="phoneNumberField"/>
+        <TextBox Grid.Row="9" Name="emailField"/>
 
         <Button
             Content="Submit"
-            Grid.Row="5"
+            Grid.Row="10"
             HorizontalAlignment="Center"
             Margin="10"
             MinWidth="100" 

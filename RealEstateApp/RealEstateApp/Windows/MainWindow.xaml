@@ -10,13 +10,15 @@
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
+            <RowDefinition Height="0.75*"/>
             <RowDefinition Height="1*"/>
+            <RowDefinition Height="0.75*"/>
             <RowDefinition Height="1*"/>
+            <RowDefinition Height="0.75*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
 
@@ -26,50 +28,34 @@
             FontSize="24" 
             FontWeight="Bold" 
             HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Grid.ColumnSpan="2"></Label>
+            VerticalAlignment="Center"></Label>
 
-        <StackPanel
-            MinWidth="150"
-            Grid.Row="1"
-            Grid.ColumnSpan="2"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center">
-
-            <Label Content="Office ID"/>
-            
-            <!-- Office IDs Go Here -->
-            <ComboBox Name="officeList"/>
-        </StackPanel>
-
-        <StackPanel
-            MinWidth="150"
-            Grid.Row="2"
-            Grid.ColumnSpan="2"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center">
-
-            <Label Content="Username"/>
-            <TextBox Name="usernameField"/>
-        </StackPanel>
-
-        <StackPanel
-            MinWidth="150"
-            Grid.Row="3"
-            Grid.ColumnSpan="2"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center">
-
-            <Label Content="Password"/>
-            <PasswordBox Name="passwordField"/>
-        </StackPanel>
+        <Label Grid.Row="1" 
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center" Content="Office ID"/>
+        <Label Grid.Row="3" 
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center" Content="Username"/>
+        <Label Grid.Row="5" 
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center" Content="Password"/>
+        
+        <!-- Office IDs Go Here -->
+        <ComboBox Grid.Row="2" 
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center" Name="officeList"/>
+        <TextBox Grid.Row="4" 
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center" Name="usernameField"/>
+        <PasswordBox Grid.Row="6" 
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center" Name="passwordField"/>
 
         <Button
             Content="Login"
-            Grid.Row="4"
-            Grid.ColumnSpan="2"
+            Grid.Row="8"
             HorizontalAlignment="Center"
-            Margin="10"
+            Margin="5"
             MinWidth="100" Click="Login">
         </Button>
     </Grid>
