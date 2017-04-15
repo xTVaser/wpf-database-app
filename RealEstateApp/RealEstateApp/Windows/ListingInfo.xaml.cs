@@ -125,12 +125,12 @@ namespace RealEstateApp {
 
                     decimal highestAmount = offers.ElementAt(0).amount;
 
-                    // Check to see if the seller has an agent
-                    var seller = context.Clients.SqlQuery("SELECT * FROM Client WHERE id = @id", new SqlParameter("id", originalItem.seller_id)).FirstOrDefault<Client>();
+                    // Check to see if the buyer has an agent
+                    var buyer = context.Clients.SqlQuery("SELECT * FROM Client WHERE id = @id", new SqlParameter("id", offers.ElementAt(0).client_id)).FirstOrDefault<Client>();
                     
-                    if (seller.assigned_agent != null) {
+                    if (buyer.assigned_agent != null) {
 
-                        var agent = context.Agents.SqlQuery("SELECT * FROM Agent WHERE id = @id", new SqlParameter("id", seller.assigned_agent)).FirstOrDefault<Agent>();
+                        var agent = context.Agents.SqlQuery("SELECT * FROM Agent WHERE id = @id", new SqlParameter("id", buyer.assigned_agent)).FirstOrDefault<Agent>();
 
                         // Next calculate what the agent will get as a commission and what the broker will get 
                         decimal agentAmount = (decimal)((float)highestAmount * (agent.commission_percentage / 100));
@@ -194,7 +194,7 @@ namespace RealEstateApp {
 
                 ClientItem newItem = new ClientItem(client.client_type);
                 newItem.id = client.id;
-                newItem.agentId = newItem.agentId;
+                newItem.agentId = client.assigned_agent;
                 newItem.Email = client.email;
                 newItem.FirstName = client.first_name;
                 newItem.LastName = client.last_name;

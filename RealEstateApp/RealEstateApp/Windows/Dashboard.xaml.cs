@@ -15,8 +15,6 @@ using System.Windows.Shapes;
 using RealEstateApp.EntityModels;
 using System.Data.SqlClient;
 
-// TODO: Finish Balance Tab
-
 namespace RealEstateApp {
 
     /// <summary>
@@ -25,6 +23,7 @@ namespace RealEstateApp {
     public partial class Dashboard : Window {
 
         private Employee user;
+        private Agent agent;
         private string accountType;
         private bool isBroker;
         private Int32? agentID;
@@ -76,7 +75,15 @@ namespace RealEstateApp {
 
                 // Both agent types can make listings and view their balances
                 newListingBtn.Visibility = Visibility.Collapsed;
-                //FillTab(balanceTab);
+                // TODO FillTab(balanceTab); 
+
+                // Get agent object
+                using (var context = new Model()) {
+
+                    agent = context.Agents.SqlQuery("SELECT * FROM Agent WHERE employee_username = @username AND employee_office_id = @oid",
+                        new SqlParameter("username", user.username),
+                        new SqlParameter("oid", user.office_id)).FirstOrDefault<Agent>();
+                }
             }
             
             // Everyone can see these tabs and content within
@@ -202,9 +209,9 @@ namespace RealEstateApp {
         }
 
         private void newClientBtn_Click(object sender, RoutedEventArgs e) {
-
+            
             // Open client window
-            AddClient addClientWindow = new AddClient(clientGridView);
+            AddClient addClientWindow = new AddClient(clientGridView, agent);
             addClientWindow.Show();
         }
 
@@ -271,8 +278,6 @@ namespace RealEstateApp {
         private void menuItem_fireEmployee_Click(object sender, RoutedEventArgs e) {
 
             // TODO support deletion
-
-
         }
 
         /// <summary>

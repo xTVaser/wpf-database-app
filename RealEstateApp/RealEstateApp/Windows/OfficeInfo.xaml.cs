@@ -54,7 +54,7 @@ namespace RealEstateApp {
                 brokerEmail.Content = broker.email;
 
                 // employee listing
-                var employees = context.Employees.SqlQuery("SELECT * FROM Employee").ToList<Employee>();
+                var employees = context.Employees.SqlQuery("SELECT * FROM Employee WHERE office_id = @id", new SqlParameter("id", item.ID)).ToList<Employee>();
 
                 foreach (Employee employee in employees) {
 

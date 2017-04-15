@@ -16,8 +16,6 @@ using System.Windows.Shapes;
 using RealEstateApp.EntityModels;
 using System.Data.SqlClient;
 
-// TODO auto update all grids that are in a window that allows to add to it
-
 namespace RealEstateApp {
 
     /// <summary>

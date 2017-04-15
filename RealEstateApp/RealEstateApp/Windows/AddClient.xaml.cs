@@ -24,22 +24,24 @@ namespace RealEstateApp {
     public partial class AddClient : Window {
 
         ListView list;
+        Agent agent;
 
-        public AddClient(ListView list) {
+        public AddClient(ListView list, Agent agent) {
 
             InitializeComponent();
             this.list = list;
+            this.agent = agent;
         }
 
         private void AddNewClient(object sender, RoutedEventArgs e) {
 
             string firstName = firstNameField.Text;
             string lastName = lastNameField.Text;
-            string clientType = clientTypeField.SelectedValue.ToString();
+            string clientType = ((ComboBoxItem)clientTypeField.SelectedItem).Content.ToString();
             string phoneNumber = phoneNumberField.Text;
             string email = emailField.Text;
 
-            Int32 result = HelperFunctions.AddNewClient(firstName, lastName, clientType, phoneNumber, email);
+            Int32 result = HelperFunctions.AddNewClient(agent.id, firstName, lastName, clientType, phoneNumber, email);
 
             if (result != -1) {
 

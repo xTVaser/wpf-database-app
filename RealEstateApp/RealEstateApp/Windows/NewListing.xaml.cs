@@ -115,7 +115,7 @@ namespace RealEstateApp {
                 string email = clientEmail.Text;
 
                 //need the ID of the last inserted row
-                sellerID = HelperFunctions.AddNewClient(fname, lname, "Seller", phone, email);
+                sellerID = HelperFunctions.AddNewClient(null, fname, lname, "Seller", phone, email);
 
                 if (sellerID == -1) {
                     MessageBox.Show("Unable to create client", "Incorrect Fields");

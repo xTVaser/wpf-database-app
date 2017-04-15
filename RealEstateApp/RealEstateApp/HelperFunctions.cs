@@ -77,9 +77,8 @@ namespace RealEstateApp {
             var matches = Regex.Match(s, @"^[ABCEGHJKLMNPRSTVXYabceghjklmnprstvxy]{1}\d{1}[A-Za-z]{1}\d{1}[A-Za-z]{1}\d{1}$");
             return matches.Success;
         }
-
-        // TODO need to set agent information, not currently doing so
-        public static Int32 AddNewClient(string fname, string lname, string clientType, string phoneNumber, string email) {
+        
+        public static Int32 AddNewClient(int? assignedAgent, string fname, string lname, string clientType, string phoneNumber, string email) {
 
             // If any of the fields are empty, then stop
             if (HelperFunctions.NullOrEmpty(fname, lname, clientType, phoneNumber, email)) {
@@ -120,9 +119,16 @@ namespace RealEstateApp {
                 }
 
                 SqlParameter emailParam = new SqlParameter("email", email);
-                Object[] parameters = new object[] { fnameParam, lnameParam, clientParam, phoneParam, emailParam };
-                var queryResult = context.Database.ExecuteSqlCommand("INSERT INTO client (client_type, first_name, last_name, phone_number, email)" +
-                                                                       "VALUES (@clienttype, @fname, @lname, @phonenumber, @email)", parameters);
+                SqlParameter assignedAgentParam = new SqlParameter("agent", System.Data.SqlDbType.Int);
+
+                if (assignedAgent != null)
+                    assignedAgentParam.Value = assignedAgent;
+                else
+                    assignedAgentParam.Value = DBNull.Value;
+
+                Object[] parameters = new object[] { assignedAgentParam, fnameParam, lnameParam, clientParam, phoneParam, emailParam };
+                var queryResult = context.Database.ExecuteSqlCommand("INSERT INTO client (assigned_agent, client_type, first_name, last_name, phone_number, email)" +
+                                                                       "VALUES (@agent, @clienttype, @fname, @lname, @phonenumber, @email)", parameters);
 
                 var result = context.Clients.SqlQuery("SELECT * FROM client WHERE ID = IDENT_CURRENT('client')").FirstOrDefault<Client>();
                 

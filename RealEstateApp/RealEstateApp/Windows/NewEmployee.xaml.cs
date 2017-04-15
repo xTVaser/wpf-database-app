@@ -16,8 +16,6 @@ using RealEstateApp.EntityModels;
 using System.Data.SqlClient;
 using System.ComponentModel;
 
-// TODO Update list when completed, extract that logic into a method
-
 namespace RealEstateApp {
 
     /// <summary>
