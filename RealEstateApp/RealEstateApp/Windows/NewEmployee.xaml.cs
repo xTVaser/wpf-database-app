@@ -56,8 +56,8 @@ namespace RealEstateApp {
                 securityAnswerField.Text = item.securityAnswer;
 
                 if (item.Type.Equals("S")) {
-                    salaryField.Text = item.Salary.ToString();
                     adminBox.IsChecked = true;
+                    salaryField.Text = item.Salary.ToString();
 
                     // Disable agent fields
                     phoneNumberField.IsEnabled = false;

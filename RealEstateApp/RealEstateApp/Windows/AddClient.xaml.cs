@@ -53,7 +53,7 @@ namespace RealEstateApp {
                 newItem.FirstName = firstName;
                 newItem.LastName = lastName;
                 newItem.Email = email;
-                newItem.PhoneNumber = phoneNumber;
+                newItem.PhoneNumber = HelperFunctions.PhoneNumberToString(phoneNumber);
                 
                 list.Items.Add(newItem);
 

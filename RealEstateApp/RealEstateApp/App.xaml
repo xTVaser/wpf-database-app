@@ -4,8 +4,6 @@
              xmlns:local="clr-namespace:RealEstateApp"
              StartupUri="Windows/MainWindow.xaml">
     <Application.Resources>
-        
     </Application.Resources>
-    
 </Application>
     
