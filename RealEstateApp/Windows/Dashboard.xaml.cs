@@ -234,7 +234,7 @@ namespace RealEstateApp {
 
                 foreach (Employee employee in employees) {
 
-                    if (employee.fired != null)
+                    if (employee.fired != null || employee.username.Equals(user.username))
                         continue;
 
                     EmployeeItem newItem = new EmployeeItem(employee.employee_type);
